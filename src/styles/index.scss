@@ -1,0 +1,13 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --color-bg: #232543;
+  --color-fg: #f7f9f9;
+  --color-button: #858afa;
+
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+

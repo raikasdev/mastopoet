@@ -1,0 +1,152 @@
+.theme-bird-ui {
+  $color-brand-mastodon-bg: #1e2028;
+  $color-text: #f7f9f9;
+  $color-text-dim: #717c9b;
+  $color-text-link: #858afa;
+
+  $font-stack: system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  avenir next,
+  avenir,
+  segoe ui,
+  Inter,
+  helvetica neue,
+  helvetica,
+  Cantarell,
+  Ubuntu,
+  roboto,
+  noto,
+  arial,
+  sans-serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol',
+  'Noto Color Emoji';
+  $line-height: 22px;
+
+  $profile-name-gap: 6px;
+  $message-gap: 12px;
+  $avatar-size: 48px;
+
+  $icon-boost: url("data:image/svg+xml, %0A%3Csvg viewBox='0 0 24 24' color='inherit' width='18' height='18' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill='%23717c9b' d='M6 4h15a1 1 0 0 1 1 1v7h-2V6H6v3L1 5l5-4v3zm12 16H3a1 1 0 0 1-1-1v-7h2v6h14v-3l5 4l-5 4v-3z'/%3E%3C/svg%3E");
+  $icon-reply: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='18' height='18' fill='%23717c9b' aria-hidden='true'%3E%3Cg%3E%3Cpath d='M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+  $icon-star: url('data:image/svg+xml, %3Csvg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="%23717c9b" stroke-width="5.5" viewBox="0 0 68 68"%3E%3Cpath d="M31.4 3.8c-.7.4-2.5 5-4.1 10.2l-2.9 9.5-9.9.5c-5.5.3-10.6.9-11.3 1.3-.6.5-1.2 1.9-1.2 3.3 0 2 1.5 3.4 8 7.5 4.4 2.8 8 5.5 8 6s-1.3 4.5-3 9.1c-3.6 9.7-3.7 11.4-.9 12.8 2.7 1.5 3.5 1.1 12.4-5.6l7.5-5.6 8.2 6.1c8.4 6.3 11.2 7.1 13.2 3.9.8-1.4.3-3.9-2.2-11-1.8-5.1-3.2-9.6-3.2-9.9 0-.4 3.6-3 8-5.8 6.5-4.1 8-5.5 8-7.5 0-1.4-.6-2.8-1.2-3.3-.7-.4-5.8-1-11.3-1.3l-9.9-.5-2.9-9.5C37.8 4.6 36.9 3 34 3c-.8 0-2 .4-2.6.8z"/%3E%3C/svg%3E%0A');
+
+  font-family: $font-stack;
+  width: 600px;
+
+  .toot {
+    display: block;
+    background-color: $color-brand-mastodon-bg;
+    width: fit-content;
+    padding: 1rem;
+    color: $color-text;
+    width: calc(600px - 2rem);
+
+    .profile {
+      display: flex;
+      gap: 0.75em;
+      height: 0.75rem;
+
+      .display-name {
+        display: flex;
+        gap: $profile-name-gap;
+
+        strong {
+          font-weight: 500;
+        }
+
+        .username {
+          color: $color-text-dim;
+        }
+      }
+
+      .avatar img {
+        height: $avatar-size;
+        width: $avatar-size;
+        border-radius: 100rem;
+      }
+    }
+
+    .content {
+      padding-left: calc($avatar-size + $message-gap);
+
+      font-size: 17px;
+
+      p {
+        font-style: normal;
+        font-weight: 400;
+        line-height: $line-height;
+        text-rendering: optimizelegibility;
+        font-feature-settings: "kern";
+        -webkit-text-size-adjust: none;
+      }
+
+      a {
+        color: $color-text-link;
+        text-decoration: none;
+        unicode-bidi: isolate;
+      }
+
+      .emoji {
+        height: 24px;
+        margin: -1px 0 0;
+        width: 24px;
+        object-fit: contain;
+        vertical-align: middle;
+      }
+    }
+
+    // Notice! Image attachments are not inside content.
+    .image-gallery {
+      box-sizing: border-box;
+      width: 100%;
+
+      padding-left: calc($avatar-size + $message-gap);
+
+      .attachment {
+        border: 1px solid #38384d;
+        border-radius: 16px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .action-bar {
+      display: flex;
+      // Action bar is 568px wide, split to 5 (space-between)
+      // -> 133.6, remove 50px (each buttons width)
+      // -> 83.6px
+      gap: 83.6px;
+      padding-left: calc($avatar-size + $message-gap);
+      margin-top: 12px;
+
+      .action {
+        color: $color-text-dim;
+        display: inline-flex;
+        width: 50px;
+        gap: 6px;
+
+        .icon-boost::before {
+          content: $icon-boost;
+        }
+
+        .icon-reply::before {
+          content: $icon-reply;
+        }
+
+        .icon-star::before {
+          content: $icon-star;
+        }
+
+        .action-counter {
+          display: inline-block;
+          margin-inline-start: 4px;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
