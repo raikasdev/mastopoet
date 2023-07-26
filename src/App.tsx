@@ -59,7 +59,11 @@ function App() {
       scale: 2,
       backgroundColor: "#1e2028", // TODO: From theme!
     });
-    downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
+    try {
+      downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
+    } catch (e) {
+      setMessage("Saving failed due to CORS issues.");
+    }
   };
 
   return (

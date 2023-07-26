@@ -31,7 +31,7 @@ export default function PostItem({ post }: { post: Post }) {
     <div className="toot">
       <div className="profile">
         <div className="avatar">
-          <img src={avatarUrl} alt={displayName} />
+          <img src={avatarUrl} alt={displayName} crossOrigin="anonymous" />
         </div>
         <span className="display-name">
           <bdi>
@@ -49,6 +49,7 @@ export default function PostItem({ post }: { post: Post }) {
                 src={attachment.url}
                 className="attachment"
                 style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
+                crossOrigin="anonymous"
               />
             );
           if (attachment.type === "gifv")
@@ -60,6 +61,7 @@ export default function PostItem({ post }: { post: Post }) {
                 muted
                 playsInline
                 controls={false}
+                crossOrigin="anonymous"
               />
             );
           return <></>;
