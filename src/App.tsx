@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo, useRef, useState } from "react";
+import { forwardRef, useMemo, useRef, useState } from "react";
 import axios, { AxiosError } from "axios";
 import PostItem, { Post } from "./components/Post";
 
@@ -116,7 +116,17 @@ function App() {
       </style>
       <div className="center-text">
         <h1>Mastopoet</h1>
-        <p>Toot screenshot tool</p>
+        <p>
+          Toot screenshot tool, running commit{" "}
+          <a
+            href="https://github.com/raikasdev/mastopoet"
+            className="commit-link"
+          >
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+            {/** @ts-ignore */}
+            {__COMMIT_HASH__}
+          </a>
+        </p>
         <p>{message}</p>
         <div id="testicanvas"></div>
       </div>

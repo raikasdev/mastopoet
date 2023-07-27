@@ -144,3 +144,13 @@
     }
   }
 }
+
+.commit-link {
+  color: #6364ff;
+  text-decoration: none;
+  transition: all .2s;
+  
+  &:hover {
+    color: var(--color-button);
+  }
+}
