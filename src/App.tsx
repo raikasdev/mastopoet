@@ -66,7 +66,7 @@ function App() {
       <div className="center-text">
         <h1>Mastopoet</h1>
         <p>
-          Toot screenshot tool, running commit{" "}
+          The Toot screenshot tool, running commit{" "}
           <a
             href="https://github.com/raikasdev/mastopoet"
             className="commit-link"

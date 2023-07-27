@@ -64,6 +64,7 @@ export function mastodonStatusToPost(obj: any, host: string): Post {
       };
     },
   );
+
   return {
     username,
     displayName:
