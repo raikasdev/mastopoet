@@ -18,7 +18,7 @@ It allows you to create ✨ stunning ✨ screenshots of your toots, with ability
 ## TODO
 
 - [x] Customizable gradient
-- [ ] Bird UI light theme port
+- [x] Bird UI light theme port
 - [ ] Mastodon theme port
 - [ ] Customizable date format
 - [ ] A logo (to website embed)
