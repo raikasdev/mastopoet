@@ -1,7 +1,7 @@
 #root {
   display: flex;
-  justify-items: center;
   flex-direction: column;
+  justify-items: center;
 }
 
 .center-text {
@@ -16,24 +16,22 @@
 }
 
 .search {
-  padding: 0.75rem;
-
-  width: 80vw;
-  max-width: 500px;
   border: none;
-  border-right: none;
   border-radius: 5rem 0 0 5rem;
+  border-right: none;
+  max-width: 500px;
+  padding: 0.75rem;
+  width: 80vw;
 }
 
 .search-button {
+  aspect-ratio: 1 / 1;
   background-color: var(--color-fg);
-  color: var(--color-button);
-  transition: background-color 0.1s;
-
   border: none;
   border-left: none;
-    border-radius: 0 5rem 5rem 0;
-  aspect-ratio: 1/1;
+  border-radius: 0 5rem 5rem 0;
+  color: var(--color-button);
+  transition: background-color 0.1s;
 
   &:hover {
     background-color: var(--color-button);
@@ -53,14 +51,14 @@
 }
 
 .render-button {
-  padding: 0.5rem 1rem;
+  background-color: #6364ff;
   border: 0;
   border-radius: 5rem;
   color: var(--color-fg);
+  font-size: 15px;
   font-weight: 500;
-  font-size: 1.25rem;
-  background-color: #6364ff;
-
+  line-height: 22px;
+  padding: 7px 18px;
   transition: all .2s;
 
   &:hover {
@@ -71,39 +69,39 @@
 
 .gradient {
   background: #fc5c7d;
-    /* fallback for old browsers */
+  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #fc5c7d, #6a82fb);
-    /* Chrome 10-25, Safari 5.1-6 */
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #fc5c7d, #6a82fb);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 2rem;
-  position: relative;  
+  position: relative;
 }
 
 .handlebar {
   position: absolute;
   z-index: 1000;
-  
+
   &.left {
-    top: calc(50% - 8px);
     left: -4px;
+    top: calc(50% - 8px);
 
     svg {
-        &:hover {
-          cursor: e-resize;
-        }
+      &:hover {
+        cursor: e-resize;
       }
+    }
   }
 
   &.right {
-    top: calc(50% - 8px);
     right: -4px;
+    top: calc(50% - 8px);
 
     svg {
-        &:hover {
-          cursor: e-resize;
-        }
+      &:hover {
+        cursor: e-resize;
       }
+    }
   }
 
   &.top {
@@ -111,16 +109,16 @@
     top: -12px;
 
     svg {
-        &:hover {
-          cursor: n-resize;
-        }
+      &:hover {
+        cursor: n-resize;
       }
+    }
   }
-  
+
   &.bottom {
-    left: 50%;
     bottom: -12px;
-    
+    left: 50%;
+
     svg {
       &:hover {
         cursor: n-resize;
@@ -129,13 +127,12 @@
   }
 
   svg {
+    color: white;
     transition: all .2s;
 
-    color: white;
-
     &.active {
-      transform: scale(2);
       color: var(--color-button);
+      transform: scale(2);
     }
   }
 }
