@@ -10,6 +10,7 @@
 
 .search-form {
   display: flex;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, ' Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   gap: 0rem;
   justify-content: center;
   margin-bottom: 2rem;
@@ -55,6 +56,7 @@
   border: 0;
   border-radius: 5rem;
   color: var(--color-fg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, ' Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
