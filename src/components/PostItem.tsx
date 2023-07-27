@@ -1,5 +1,6 @@
 import { ForwardedRef } from "react";
-import { truncateString } from "../util";
+import { truncateString } from "../utils/util";
+import { InteractionsPreference } from "../config";
 
 export interface Post {
   displayName: string;
@@ -18,13 +19,17 @@ export interface Attachment {
   aspectRatio: number;
 }
 
+export interface PostItemProps {
+  post: Post;
+  refInstance?: ForwardedRef<HTMLDivElement>;
+  interactionsPref: InteractionsPreference;
+}
+
 export default function PostItem({
   post,
   refInstance,
-}: {
-  post: Post;
-  refInstance: ForwardedRef<HTMLDivElement>;
-}) {
+  interactionsPref,
+}: PostItemProps) {
   const {
     displayName,
     username,
@@ -78,18 +83,22 @@ export default function PostItem({
           return <div key={attachment.url}></div>;
         })}
       </div>
-      <div className="action-bar">
+      <div className={`action-bar action-bar-${interactionsPref}`}>
+        <span className="action-bar-datetime">Jul 27, 2023, 21:09</span>
         <div className="action">
           <span className="icon-reply" />
           <span className="action-counter">{comments}</span>
+          <span className="action-label">Replies</span>
         </div>
         <div className="action">
           <span className="icon-boost" />
           <span className="action-counter">{boosts}</span>
+          <span className="action-label">Boosts</span>
         </div>
         <div className="action">
           <span className="icon-star" />
           <span className="action-counter">{favourites}</span>
+          <span className="action-label">Favourites</span>
         </div>
       </div>
     </div>

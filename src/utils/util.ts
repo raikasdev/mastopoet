@@ -1,4 +1,5 @@
-import { Attachment, Post } from "./components/Post";
+import axios, { AxiosError } from "axios";
+import { Attachment, Post } from "../components/PostItem";
 
 const POST_REGEX = /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/;
 
@@ -82,4 +83,31 @@ export function downloadURI(uri: string, name: string) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+export async function submitUrl(url: string) {
+  const urlParsed = parseUrl(url);
+  if (!urlParsed) throw new Error("Invalid Toot URL");
+  if (urlParsed.protocol !== "https:")
+    throw new Error("Protocol must be HTTPS");
+
+  try {
+    const targetUrl = new URL(
+      `https://${urlParsed.host}${getPostApiPath(urlParsed.postId)}`
+    );
+    const res = await axios.get(targetUrl.toString(), {
+      headers: {
+        "User-Agent": "mastopoet/1.0.0",
+      },
+    });
+
+    return mastodonStatusToPost(res.data, urlParsed.host);
+  } catch (e) {
+    if (e instanceof AxiosError) {
+      if (!e.response) throw new Error("Failed to reach API");
+      if (e.response.status === 404)
+        throw new Error("Toot not found. Is it private?");
+    }
+    throw new Error("Unknown error trying to reach Mastodon instance");
+  }
 }

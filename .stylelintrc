@@ -105,7 +105,7 @@
     ],
     "no-descending-specificity": null,
     "max-nesting-depth": [
-      3,
+      6,
       {
         "ignore": [
           "blockless-at-rules",
@@ -128,8 +128,7 @@
       }
     ],
     "property-disallowed-list": [
-      "font",
-      "background"
+      "font"
     ]
   }
 }

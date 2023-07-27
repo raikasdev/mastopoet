@@ -1,4 +1,4 @@
-#root {
+.app {
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -15,23 +15,42 @@
 }
 
 .alert {
-  border-radius: 1rem;
   background-color: #f91880bf;
-  padding: 0.25rem;
+  border-radius: 1rem;
   margin: 0.5rem 0;
+  padding: 0.25rem;
 
   .alert-title {
-    margin-top: 1rem;
+    align-items: center;
     display: flex;
     gap: 0.25rem;
-    align-items: center;
     justify-content: center;
+    margin-top: 1rem;
   }
 }
 
 .search-form {
   display: flex;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, ' Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    avenir next,
+    avenir,
+    segoe ui,
+    Inter,
+    helvetica neue,
+    helvetica,
+    Cantarell,
+    Ubuntu,
+    roboto,
+    noto,
+    arial,
+    sans-serif,
+    " Apple Color Emoji",
+    Segoe UI Emoji,
+    Segoe UI Symbol,
+    Noto Color Emoji;
   gap: 0rem;
   justify-content: center;
   margin-bottom: 2rem;
@@ -62,6 +81,32 @@
   }
 }
 
+.options-editor {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 1rem 0;
+
+  .option {
+    display: flex;
+    flex-direction: column;
+
+    select {
+      appearance: none;
+
+      /* stylelint-disable-next-line property-disallowed-list */
+      background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23fff' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>")
+        no-repeat;
+      background-color: #15202b;
+      background-position: calc(100% - 0.75rem) center;
+      border: 0;
+      border-radius: 0.25rem;
+      color: white;
+      padding: 0.5rem 2rem 0.5rem 1rem;
+    }
+  }
+}
+
 .flex-center {
   display: flex;
   justify-content: center;
@@ -77,12 +122,31 @@
   border: 0;
   border-radius: 5rem;
   color: var(--color-fg);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, ' Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    avenir next,
+    avenir,
+    segoe ui,
+    Inter,
+    helvetica neue,
+    helvetica,
+    Cantarell,
+    Ubuntu,
+    roboto,
+    noto,
+    arial,
+    sans-serif,
+    " Apple Color Emoji",
+    Segoe UI Emoji,
+    Segoe UI Symbol,
+    Noto Color Emoji;
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
   padding: 7px 18px;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &:hover {
     background-color: var(--color-button);
@@ -92,13 +156,11 @@
 
 .gradient-box {
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  position: relative;  
+  position: relative;
 }
 
 .gradient {
-  background: #fc5c7d;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #fc5c7d, #6a82fb);
   /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #fc5c7d, #6a82fb);
 
@@ -109,9 +171,9 @@
 
 .handlebar {
   position: absolute;
-  z-index: 1000;
   touch-action: none;
-  
+  z-index: 1000;
+
   &.left {
     left: -4px;
     top: calc(50% - 8px);
@@ -158,17 +220,16 @@
 
   svg {
     color: white;
-    transition: all .2s;
     touch-action: none;
-    color: white;
-
-    @media screen and (max-width: 1024px) {
-      display: none;
-    }
+    transition: all 0.2s;
 
     &.active {
       color: var(--color-button);
       transform: scale(2);
+    }
+
+    @media screen and (max-width: 1024px) {
+      display: none;
     }
   }
 }
@@ -176,7 +237,7 @@
 .commit-link {
   color: #6364ff;
   text-decoration: none;
-  transition: all .2s;
+  transition: all 0.2s;
 
   &:hover {
     color: var(--color-button);

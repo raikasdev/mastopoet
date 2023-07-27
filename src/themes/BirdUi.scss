@@ -3,7 +3,25 @@
   $color-text: #f7f9f9;
   $color-text-dim: #717c9b;
   $color-text-link: #858afa;
-  $font-stack: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, ' Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  $font-stack: system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    avenir next,
+    avenir,
+    segoe ui,
+    Inter,
+    helvetica neue,
+    helvetica,
+    Cantarell,
+    Ubuntu,
+    roboto,
+    noto,
+    arial,
+    sans-serif,
+    " Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
   $line-height: 22px;
   $profile-name-gap: 6px;
   $message-gap: 12px;
@@ -19,7 +37,6 @@
     color: $color-text;
     display: block;
     padding: 2rem;
-    width: fit-content;
     width: calc(600px - 4rem);
 
     .profile {
@@ -67,7 +84,7 @@
         font-weight: 400;
         line-height: $line-height;
         text-rendering: optimizelegibility;
-        -webkit-text-size-adjust: none;
+        text-size-adjust: none;
       }
 
       a {
@@ -101,36 +118,87 @@
 
     .action-bar {
       display: flex;
-      // Action bar is 568px wide, split to 5 (space-between)
-      // -> 133.6, remove 50px (each buttons width)
-      // -> 83.6px
-      gap: 83.6px;
+
       margin-top: 12px;
       padding-left: calc($avatar-size + $message-gap);
 
-      .action {
-        color: $color-text-dim;
-        display: inline-flex;
+      &.action-bar-hidden {
+        display: none;
+      }
+
+      &.action-bar-feed {
+        // Action bar is 568px wide, split to 5 (space-between)
+        // -> 133.6, remove 50px (each buttons width)
+        // -> 83.6px
+        gap: 83.6px;
+
+        .action-bar-datetime {
+          display: none;
+        }
+
+        .action {
+          color: $color-text-dim;
+          display: inline-flex;
+          width: 50px;
+
+          .icon-boost::before {
+            content: $icon-boost;
+          }
+
+          .icon-reply::before {
+            content: $icon-reply;
+          }
+
+          .icon-star::before {
+            content: $icon-star;
+          }
+
+          .action-counter {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-inline-start: 4px;
+          }
+
+          .action-label {
+            display: none;
+          }
+        }
+      }
+
+      &.action-bar-normal {
+        font-size: 15px;
         gap: 6px;
-        width: 50px;
 
-        .icon-boost::before {
-          content: $icon-boost;
+        .action-bar-datetime {
+          color: $color-text-dim;
         }
 
-        .icon-reply::before {
-          content: $icon-reply;
+        &.no-replies {
+          div:first-of-type {
+            display: none;
+          }
         }
 
-        .icon-star::before {
-          content: $icon-star;
-        }
+        .action {
+          display: inline-flex;
+          gap: 4px;
 
-        .action-counter {
-          display: inline-block;
-          font-size: 13px;
-          font-weight: 500;
-          margin-inline-start: 4px;
+          .action-counter {
+            font-weight: 700;
+          }
+
+          .action-label {
+            color: $color-text-dim;
+            font-weight: 500;
+          }
+
+          &::before {
+            align-items: center;
+            color: $color-text-dim;
+            content: ".";
+            line-height: 18px;
+          }
         }
       }
     }
