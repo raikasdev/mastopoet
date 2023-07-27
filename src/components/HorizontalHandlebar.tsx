@@ -34,15 +34,6 @@ export default function HorizontalHandlerbar({
       { once: true }
     );
 
-    document.addEventListener(
-      "touchend",
-      () => {
-        setHolding(false);
-        document.removeEventListener("mousemove", mouseMove);
-      },
-      { once: true }
-    );
-
     document.addEventListener("mousemove", mouseMove);
   }, []);
 

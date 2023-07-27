@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useRef, useState } from "react";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import axios, { AxiosError } from "axios";
 import PostItem, { Post } from "./components/Post";
 
@@ -24,6 +24,7 @@ const minHeight = 0;
 const maxHeight = 200; // ^
 
 function App() {
+  const [rendering, setRendering] = useState(false);
   const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
   const [post, setPost] = useState<Post | null>(null);
@@ -76,20 +77,29 @@ function App() {
 
   const itemRef = useRef<HTMLDivElement>(null);
   const exportImage = async () => {
-    if (!itemRef.current) return alert("No ref current");
-    const canvas = await html2canvas(itemRef.current, {
-      allowTaint: true,
-      useCORS: true,
-      scale: 2,
-      backgroundColor: "#1e2028", // TODO: From theme!
-      ignoreElements: (element) => element.classList.contains("handlebar"),
-    });
-    try {
-      downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
-    } catch (e) {
-      setMessage("Saving failed due to CORS issues.");
-    }
+    setRendering(true);
   };
+
+  useEffect(() => {
+    if (!rendering) return;
+    (async () => {
+      if (itemRef.current) {
+        const canvas = await html2canvas(itemRef.current, {
+          allowTaint: true,
+          useCORS: true,
+          scale: 2,
+          backgroundColor: "#1e2028", // TODO: From theme!
+          ignoreElements: (element) => element.classList.contains("handlebar"),
+        });
+        try {
+          downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
+        } catch (e) {
+          setMessage("Saving failed due to CORS issues.");
+        }
+      }
+      setRendering(false);
+    })();
+  }, [rendering]);
 
   const ref = useRef<HTMLDivElement>(null);
   const PostItemReffed = useMemo(
@@ -101,6 +111,8 @@ function App() {
       )) as any,
     [post]
   );
+
+  const isMobile = window.innerWidth < 1024;
 
   return (
     <>
@@ -116,6 +128,33 @@ function App() {
             {/** @ts-ignore */}
             {__COMMIT_HASH__}
           </a>
+          <div className="hide-desktop alert">
+            <span className="alert-title">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="icon icon-tabler icon-tabler-devices-off"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M13 9a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v8m-1 3h-6a1 1 0 0 1 -1 -1v-6"></path>
+                <path d="M18 8v-3a1 1 0 0 0 -1 -1h-9m-4 0a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h9"></path>
+                <path d="M16 9h2"></path>
+                <path d="M3 3l18 18"></path>
+              </svg>
+              <strong>Not optimized for mobile devices</strong>
+            </span>
+            <p>
+              Sorry! Mastopoet is not optimized for mobile devices yet. Custom
+              backgrounds have been disabled.
+            </p>
+          </div>
         </p>
         <p>{message}</p>
       </div>
@@ -167,20 +206,26 @@ function App() {
           <div
             className="gradient-container"
             style={{
-              padding:
-                window.screen.width > 608
-                  ? `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`
-                  : "0",
+              padding: isMobile
+                ? "0"
+                : `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`,
               transform: `scale(${
-                window.screen.width > 608
+                window.screen.width > 608 + maxWidth
                   ? 1
-                  : window.innerWidth / (608 + width)
+                  : rendering
+                  ? 1
+                  : window.innerWidth / 608
               })`,
             }}
           >
             <div
-              className={`theme-bird-ui gradient dynamic-padding`}
-              style={{ padding: `${height / 2}px ${width / 2}px` }}
+              className={`theme-bird-ui gradient-box ${
+                width == 0 && height == 0 ? "" : "gradient"
+              } dynamic-padding`}
+              style={{
+                padding: isMobile ? "0" : `${height / 2}px ${width / 2}px`,
+                borderRadius: rendering ? "0" : "2rem",
+              }}
               ref={itemRef}
             >
               <HorizontalHandlerbar

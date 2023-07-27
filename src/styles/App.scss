@@ -8,6 +8,27 @@
   text-align: center;
 }
 
+.hide-desktop {
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.alert {
+  border-radius: 1rem;
+  background-color: #f91880bf;
+  padding: 0.25rem;
+  margin: 0.5rem 0;
+
+  .alert-title {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .search-form {
   display: flex;
   gap: 0rem;
@@ -69,20 +90,28 @@
   }
 }
 
-.gradient {
-  background: #fc5c7d;
-    /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #fc5c7d, #6a82fb);
-    /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #fc5c7d, #6a82fb);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 2rem;
+.gradient-box {
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   position: relative;  
 }
 
+.gradient {
+  background: #fc5c7d;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #fc5c7d, #6a82fb);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #fc5c7d, #6a82fb);
+
+  @media screen and (max-width: 1024px) {
+    background: transparent;
+  }
+}
+
 .handlebar {
+
   position: absolute;
   z-index: 1000;
+  touch-action: none;
   
   &.left {
     top: calc(50% - 8px);
@@ -130,8 +159,12 @@
 
   svg {
     transition: all .2s;
-
+    touch-action: none;
     color: white;
+
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
 
     &.active {
       transform: scale(2);

@@ -61,6 +61,7 @@ export default function VerticalHandlerbar({
     <div
       className={`handlebar ${side}`}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleMouseDown}
       ref={ref}
     >
       <svg viewBox="0 0 16 16" height={8} className={holding ? "active" : ""}>
