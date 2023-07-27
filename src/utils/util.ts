@@ -66,7 +66,10 @@ export function mastodonStatusToPost(obj: any, host: string): Post {
   );
   return {
     username,
-    displayName: obj.account.display_name,
+    displayName:
+      obj.account.display_name === ""
+        ? obj.account.username
+        : obj.account.display_name,
     avatarUrl: obj.account.avatar,
     boosts: obj.reblogs_count,
     comments: obj.replies_count,
