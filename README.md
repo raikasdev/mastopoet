@@ -19,9 +19,12 @@ It allows you to create ✨ stunning ✨ screenshots of your toots, with ability
 
 - [x] Customizable gradient
 - [x] Bird UI light theme port
-- [ ] Mastodon theme port
+- [x] Mastodon theme port
 - [ ] Customizable date format
 - [ ] A logo (to website embed)
+- [ ] Read toot URL from query
+- [ ] Default Toot with information
+- [ ] Fix multi image image galleries
 
 ## Credits
 

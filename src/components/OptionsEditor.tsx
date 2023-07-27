@@ -33,12 +33,11 @@ export default function OptionsEditor({ options, setOptions }: OptionsProps) {
         >
           <option value="bird-ui">Bird UI (Dark)</option>
           <option value="bird-ui-light">Bird UI (Light)</option>
-          <option value="mastodon" disabled>
-            Mastodon (Dark)
+          <option value="mastodon">Mastodon (Dark)</option>
+          <option value="mastodon-white-interactions">
+            Mastodon (Dark + light interactions)
           </option>
-          <option value="mastodon-light" disabled>
-            Mastodon (Light)
-          </option>
+          <option value="mastodon-light">Mastodon (Light)</option>
         </select>
       </div>
       <div className="option">

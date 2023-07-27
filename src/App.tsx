@@ -14,13 +14,14 @@ import {
 } from "./config";
 import SearchForm from "./components/SearchForm";
 import { useObjectState } from "./utils/use-object-state";
+import OptionsEditor from "./components/OptionsEditor";
 
 // Main styles
 import "./styles/App.scss";
 
 // Themes
 import "./themes/BirdUi.scss";
-import OptionsEditor from "./components/OptionsEditor";
+import "./themes/Mastodon.scss";
 
 function App() {
   const [message, setMessage] = useState("");
