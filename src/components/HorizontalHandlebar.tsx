@@ -34,6 +34,15 @@ export default function HorizontalHandlerbar({
       { once: true }
     );
 
+    document.addEventListener(
+      "touchend",
+      () => {
+        setHolding(false);
+        document.removeEventListener("mousemove", mouseMove);
+      },
+      { once: true }
+    );
+
     document.addEventListener("mousemove", mouseMove);
   }, []);
 
@@ -41,6 +50,7 @@ export default function HorizontalHandlerbar({
     <div
       className={`handlebar ${side}`}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleMouseDown}
       ref={ref}
     >
       <svg viewBox="0 0 16 16" height={8} className={holding ? "active" : ""}>

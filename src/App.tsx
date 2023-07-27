@@ -104,16 +104,6 @@ function App() {
 
   return (
     <>
-      {/** Hack to avoid rerenders & images flickering */}
-      <style>
-        {`.dynamic-padding {
-          padding: ${height / 2}px ${width / 2}px;
-        }
-        
-        .gradient-container {
-          padding: ${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px; 
-        }`}
-      </style>
       <div className="center-text">
         <h1>Mastopoet</h1>
         <p>
@@ -128,7 +118,6 @@ function App() {
           </a>
         </p>
         <p>{message}</p>
-        <div id="testicanvas"></div>
       </div>
       <form
         className="search-form"
@@ -173,10 +162,25 @@ function App() {
         )}
       </div>
       <div className="flex-center">
+        {/** Scaling, width 600px + 8px for handles */}
         {post && (
-          <div className="gradient-container">
+          <div
+            className="gradient-container"
+            style={{
+              padding:
+                window.screen.width > 608
+                  ? `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`
+                  : "0",
+              transform: `scale(${
+                window.screen.width > 608
+                  ? 1
+                  : window.innerWidth / (608 + width)
+              })`,
+            }}
+          >
             <div
               className={`theme-bird-ui gradient dynamic-padding`}
+              style={{ padding: `${height / 2}px ${width / 2}px` }}
               ref={itemRef}
             >
               <HorizontalHandlerbar

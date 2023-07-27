@@ -10,4 +10,7 @@ export default defineConfig({
     __COMMIT_HASH__: JSON.stringify(commitHash),
   },
   plugins: [react()],
+  server: {
+    host: "0.0.0.0",
+  },
 });
