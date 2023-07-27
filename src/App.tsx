@@ -29,6 +29,7 @@ function App() {
   const [options, setOptions] = useObjectState<Options>({
     theme: "bird-ui",
     interactions: "feed",
+    background: "linear-gradient(to right, #fc5c7d, #6a82fb)",
   });
   const [width, setWidth] = useMinmaxState(defaultWidth, 0, maxWidth);
   const [height, setHeight] = useMinmaxState(defaultHeight, 0, maxHeight);

@@ -107,6 +107,32 @@
     }
   }
 
+  label {
+    margin-bottom: 0.5rem;
+  }
+  .color-grid {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    .color {
+      border: 0.15rem white solid;
+      border-radius: 0.5rem;
+      color: var(--color-button);
+      content: "";
+      height: 50px;
+
+      transition: all 0.2s;
+      width: 50px;
+
+      &:hover {
+        color: var(--color-fg);
+        cursor: pointer;
+        outline: 0.25rem #f3f3f350 solid;
+      }
+    }
+  }
+
   @media screen and (max-width: 400px) {
     flex-direction: column;
   }
@@ -167,8 +193,6 @@
 .gradient {
   /* fallback for old browsers */
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #fc5c7d, #6a82fb);
-
   @media screen and (max-width: 1024px) {
     background: transparent;
   }

@@ -21,4 +21,5 @@ export type InteractionsPreference =
 export interface Options {
   theme: Theme;
   interactions: InteractionsPreference;
+  background: string;
 }

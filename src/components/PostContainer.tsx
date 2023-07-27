@@ -34,7 +34,7 @@ export default function PostContainer({
       forwardRef<HTMLDivElement, PostItemProps>((props, ref) => (
         <PostItem {...props} refInstance={ref} />
       )),
-    [post]
+    [post],
   );
 
   return (
@@ -62,6 +62,7 @@ export default function PostContainer({
           style={{
             padding: isMobile ? "0" : `${height / 2}px ${width / 2}px`,
             borderRadius: rendering ? "0" : "2rem",
+            background: options.background,
           }}
           ref={screenshotRef}
         >
