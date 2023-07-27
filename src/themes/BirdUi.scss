@@ -40,9 +40,9 @@
     display: block;
     background-color: $color-brand-mastodon-bg;
     width: fit-content;
-    padding: 1rem;
+    padding: 2rem;
     color: $color-text;
-    width: calc(600px - 2rem);
+    width: calc(600px - 4rem);
 
     .profile {
       display: flex;
@@ -55,10 +55,17 @@
 
         strong {
           font-weight: 500;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .username {
           color: $color-text-dim;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          height: 1.5rem;
         }
       }
 

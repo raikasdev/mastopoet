@@ -24,6 +24,15 @@ export function parseUrl(inputURL: string) {
 
 export const getPostApiPath = (id: string) => `/api/v1/statuses/${id}`;
 
+export const truncateString = (str: string, num: number) => {
+  const arr = Array.from(str);
+  if (arr.length > num) {
+    return arr.slice(0, num).join("") + "…";
+  } else {
+    return str;
+  }
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function mastodonStatusToPost(obj: any, host: string): Post {
   const username = obj.account.acct.includes("@")

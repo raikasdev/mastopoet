@@ -1,3 +1,6 @@
+import { ForwardedRef } from "react";
+import { truncateString } from "../util";
+
 export interface Post {
   displayName: string;
   username: string;
@@ -15,7 +18,13 @@ export interface Attachment {
   aspectRatio: number;
 }
 
-export default function PostItem({ post }: { post: Post }) {
+export default function PostItem({
+  post,
+  refInstance,
+}: {
+  post: Post;
+  refInstance: ForwardedRef<HTMLDivElement>;
+}) {
   const {
     displayName,
     username,
@@ -28,14 +37,14 @@ export default function PostItem({ post }: { post: Post }) {
   } = post;
 
   return (
-    <div className="toot">
+    <div className="toot" ref={refInstance}>
       <div className="profile">
         <div className="avatar">
           <img src={avatarUrl} alt={displayName} crossOrigin="anonymous" />
         </div>
         <span className="display-name">
           <bdi>
-            <strong>{displayName}</strong>
+            <strong>{truncateString(displayName, 30)}</strong>
           </bdi>
           <span className="username">{username}</span>
         </span>
@@ -46,6 +55,7 @@ export default function PostItem({ post }: { post: Post }) {
           if (attachment.type === "image")
             return (
               <img
+                key={attachment.url}
                 src={attachment.url}
                 className="attachment"
                 style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
@@ -55,6 +65,7 @@ export default function PostItem({ post }: { post: Post }) {
           if (attachment.type === "gifv")
             return (
               <video
+                key={attachment.url}
                 src={attachment.url}
                 className="attachment"
                 style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
@@ -64,7 +75,7 @@ export default function PostItem({ post }: { post: Post }) {
                 crossOrigin="anonymous"
               />
             );
-          return <></>;
+          return <div key={attachment.url}></div>;
         })}
       </div>
       <div className="action-bar">

@@ -49,7 +49,7 @@
 }
 
 .toot {
-  border-radius: 0.5rem;
+  border-radius: 1rem;
 }
 
 .render-button {
@@ -66,5 +66,81 @@
   &:hover {
     background-color: var(--color-button);
     cursor: pointer;
+  }
+}
+
+.gradient {
+  background: #fc5c7d;
+    /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #fc5c7d, #6a82fb);
+    /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #fc5c7d, #6a82fb);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 2rem;
+  position: relative;
+
+  position: absolute;
+
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.handlebar {
+  position: absolute;
+  z-index: 1000;
+  
+  &.left {
+    top: calc(50% - 8px);
+    left: -4px;
+
+    svg {
+        &:hover {
+          cursor: e-resize;
+        }
+      }
+  }
+
+  &.right {
+    top: calc(50% - 8px);
+    right: -4px;
+
+    svg {
+        &:hover {
+          cursor: e-resize;
+        }
+      }
+  }
+
+  &.top {
+    left: 50%;
+    top: -12px;
+
+    svg {
+        &:hover {
+          cursor: n-resize;
+        }
+      }
+  }
+  
+  &.bottom {
+    left: 50%;
+    bottom: -12px;
+    
+    svg {
+      &:hover {
+        cursor: n-resize;
+      }
+    }
+  }
+
+  svg {
+    transition: all .2s;
+
+    color: white;
+
+    &.active {
+      transform: scale(2);
+      color: var(--color-button);
+    }
   }
 }

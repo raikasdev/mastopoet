@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { forwardRef, useMemo, useRef, useState } from "react";
 import axios, { AxiosError } from "axios";
 import PostItem, { Post } from "./components/Post";
 
@@ -14,11 +14,34 @@ import {
   mastodonStatusToPost,
   parseUrl,
 } from "./util";
+import HorizontalHandlerbar from "./components/HorizontalHandlebar";
+import VerticalHandlerbar from "./components/VerticalHandlebar";
+
+const minWidth = 0;
+const maxWidth = 400; // Max width after message width height
+
+const minHeight = 0;
+const maxHeight = 200; // ^
 
 function App() {
   const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
   const [post, setPost] = useState<Post | null>(null);
+
+  const [width, setWidthState] = useState(200);
+  const [height, setHeightState] = useState(100);
+
+  const setWidth = (value: number) => {
+    if (value < minWidth) value = minWidth;
+    if (value > maxWidth) value = maxWidth;
+    setWidthState(value);
+  };
+
+  const setHeight = (value: number) => {
+    if (value < minHeight) value = minHeight;
+    if (value > maxHeight) value = maxHeight;
+    setHeightState(value);
+  };
 
   const submitUrl = async () => {
     const urlParsed = parseUrl(url);
@@ -39,6 +62,8 @@ function App() {
 
       setPost(mastodonStatusToPost(res.data, urlParsed.host));
       setMessage("");
+      setHeight(100);
+      setWidth(200);
     } catch (e) {
       if (e instanceof AxiosError) {
         if (!e.response) return setMessage("Failed to reach API");
@@ -50,7 +75,6 @@ function App() {
   };
 
   const itemRef = useRef<HTMLDivElement>(null);
-
   const exportImage = async () => {
     if (!itemRef.current) return alert("No ref current");
     const canvas = await html2canvas(itemRef.current, {
@@ -58,6 +82,7 @@ function App() {
       useCORS: true,
       scale: 2,
       backgroundColor: "#1e2028", // TODO: From theme!
+      ignoreElements: (element) => element.classList.contains("handlebar"),
     });
     try {
       downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
@@ -66,8 +91,29 @@ function App() {
     }
   };
 
+  const ref = useRef<HTMLDivElement>(null);
+  const PostItemReffed = useMemo(
+    () =>
+      forwardRef<HTMLDivElement>((props: unknown, ref) => (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        <PostItem post={(props as any).post} refInstance={ref} />
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      )) as any,
+    [post]
+  );
+
   return (
     <>
+      {/** Hack to avoid rerenders & images flickering */}
+      <style>
+        {`.dynamic-padding {
+          padding: ${height / 2}px ${width / 2}px;
+        }
+        
+        .gradient-container {
+          padding: ${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px; 
+        }`}
+      </style>
       <div className="center-text">
         <h1>Mastopoet</h1>
         <p>Toot screenshot tool</p>
@@ -118,8 +164,36 @@ function App() {
       </div>
       <div className="flex-center">
         {post && (
-          <div className={`theme-bird-ui`} ref={itemRef}>
-            <PostItem post={post} />
+          <div className="gradient-container">
+            <div
+              className={`theme-bird-ui gradient dynamic-padding`}
+              ref={itemRef}
+            >
+              <HorizontalHandlerbar
+                width={width}
+                setWidth={setWidth}
+                side="left"
+              />
+              {/** Disabled due to working weirdly in a flexbox */}
+              <VerticalHandlerbar
+                height={height}
+                setHeight={setHeight}
+                side={"top"}
+              />
+              <div>
+                <PostItemReffed ref={ref} post={post} />
+              </div>
+              <VerticalHandlerbar
+                height={height}
+                setHeight={setHeight}
+                side={"bottom"}
+              />
+              <HorizontalHandlerbar
+                width={width}
+                setWidth={setWidth}
+                side="right"
+              />
+            </div>
           </div>
         )}
       </div>
