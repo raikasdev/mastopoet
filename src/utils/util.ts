@@ -46,7 +46,7 @@ export function mastodonStatusToPost(obj: any, host: string): Post {
   obj.emojis.forEach((emoji: { url: string; shortcode: string }) => {
     content = content.replaceAll(
       `:${emoji.shortcode}:`,
-      `<img class="emoji" src="${emoji.url}" />`
+      `<img class="emoji" src="${emoji.url}" />`,
     );
   });
 
@@ -62,7 +62,7 @@ export function mastodonStatusToPost(obj: any, host: string): Post {
         url: mediaAttachment.url,
         aspectRatio: mediaAttachment.meta.original.aspect,
       };
-    }
+    },
   );
   return {
     username,
@@ -73,6 +73,7 @@ export function mastodonStatusToPost(obj: any, host: string): Post {
     favourites: obj.favourites_count,
     content,
     attachments,
+    date: new Date(obj.created_at),
   };
 }
 
@@ -93,7 +94,7 @@ export async function submitUrl(url: string) {
 
   try {
     const targetUrl = new URL(
-      `https://${urlParsed.host}${getPostApiPath(urlParsed.postId)}`
+      `https://${urlParsed.host}${getPostApiPath(urlParsed.postId)}`,
     );
     const res = await axios.get(targetUrl.toString(), {
       headers: {
@@ -110,4 +111,30 @@ export async function submitUrl(url: string) {
     }
     throw new Error("Unknown error trying to reach Mastodon instance");
   }
+}
+
+export function formatDate(date: Date) {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const formattedDate = new Date(date);
+  const year = formattedDate.getFullYear();
+  const month = months[formattedDate.getMonth()];
+  const day = formattedDate.getDate();
+  const hours = formattedDate.getHours().toString().padStart(2, "0");
+  const minutes = formattedDate.getMinutes().toString().padStart(2, "0");
+
+  return `${month} ${day}, ${year}, ${hours}:${minutes}`;
 }

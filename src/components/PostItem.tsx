@@ -1,5 +1,5 @@
 import { ForwardedRef } from "react";
-import { truncateString } from "../utils/util";
+import { formatDate, truncateString } from "../utils/util";
 import { InteractionsPreference } from "../config";
 
 export interface Post {
@@ -11,6 +11,7 @@ export interface Post {
   boosts: number;
   comments: number;
   attachments: Attachment[];
+  date: Date;
 }
 
 export interface Attachment {
@@ -39,6 +40,7 @@ export default function PostItem({
     boosts,
     comments,
     attachments,
+    date,
   } = post;
 
   return (
@@ -84,7 +86,7 @@ export default function PostItem({
         })}
       </div>
       <div className={`action-bar action-bar-${interactionsPref}`}>
-        <span className="action-bar-datetime">Jul 27, 2023, 21:09</span>
+        <span className="action-bar-datetime">{formatDate(date)}</span>
         <div className="action">
           <span className="icon-reply" />
           <span className="action-counter">{comments}</span>
