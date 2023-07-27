@@ -83,6 +83,7 @@
 
 .options-editor {
   display: flex;
+
   gap: 1rem;
   justify-content: center;
   margin: 1rem 0;
@@ -104,6 +105,10 @@
       color: white;
       padding: 0.5rem 2rem 0.5rem 1rem;
     }
+  }
+
+  @media screen and (max-width: 400px) {
+    flex-direction: column;
   }
 }
 
