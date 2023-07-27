@@ -30,6 +30,9 @@
       .display-name {
         display: flex;
         gap: $profile-name-gap;
+        min-height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         strong {
           font-weight: 500;
