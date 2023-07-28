@@ -210,6 +210,28 @@
   touch-action: none;
   z-index: 1000;
 
+  &.diagonal-right {
+    bottom: -8px;
+    right: -4px;
+
+    svg {
+      &:hover {
+        cursor: nwse-resize;
+      }
+    }
+  }
+
+  &.diagonal-left {
+    left: -4px;
+    top: -16px;
+
+    svg {
+      &:hover {
+        cursor: nwse-resize;
+      }
+    }
+  }
+
   &.left {
     left: -4px;
     top: calc(50% - 8px);

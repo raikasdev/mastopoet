@@ -55,7 +55,7 @@ export default function VerticalHandlerbar({
         setHolding(false);
         document.removeEventListener("mousemove", mouseMove);
       },
-      { once: true }
+      { once: true },
     );
 
     document.addEventListener("mousemove", mouseMove);
@@ -68,7 +68,12 @@ export default function VerticalHandlerbar({
       onTouchStart={handleMouseDown}
       ref={ref}
     >
-      <svg viewBox="0 0 16 16" height={8} className={holding ? "active" : ""}>
+      <svg
+        viewBox="0 0 16 16"
+        height={8}
+        width={8}
+        className={holding ? "active" : ""}
+      >
         <circle cx="8" cy="8" r={8} fill={"currentColor"} />
       </svg>
     </div>

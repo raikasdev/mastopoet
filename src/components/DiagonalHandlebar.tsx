@@ -1,13 +1,18 @@
 import { useCallback, useRef, useState } from "react";
+import { maxWidth } from "../config";
 
 interface HandlebarProps {
   width: number;
   setWidth: (width: number) => void;
+  height: number;
+  setHeight: (width: number) => void;
   side: "right" | "left";
 }
-export default function HorizontalHandlerbar({
+export default function DiagonalHandlerbar({
   width,
   setWidth,
+  height,
+  setHeight,
   side,
 }: HandlebarProps) {
   const [holding, setHolding] = useState(false);
@@ -15,14 +20,18 @@ export default function HorizontalHandlerbar({
   const handleMouseDown = useCallback(() => {
     setHolding(true);
 
+    const ratio = isNaN(height / width) ? 0.5 : height / width;
+
     const x =
       side === "left"
         ? (ref.current?.getBoundingClientRect().left || 0) + width / 2 + 4 // 4 for centering
         : (ref.current?.getBoundingClientRect().right || 0) - width / 2 - 4;
-
     const mouseMove = (event: MouseEvent) => {
       const difference = side === "left" ? x - event.pageX : event.pageX - x;
-      setWidth(difference * 2);
+      const newWidth = Math.min(Math.max(difference * 2, 0), maxWidth);
+
+      setWidth(newWidth);
+      setHeight(newWidth * ratio);
     };
 
     document.addEventListener(
@@ -35,11 +44,11 @@ export default function HorizontalHandlerbar({
     );
 
     document.addEventListener("mousemove", mouseMove);
-  }, [width]);
+  }, [width, height]);
 
   return (
     <div
-      className={`handlebar ${side}`}
+      className={`handlebar diagonal-${side}`}
       onMouseDown={handleMouseDown}
       onTouchStart={handleMouseDown}
       ref={ref}

@@ -3,6 +3,7 @@ import PostItem, { Post, PostItemProps } from "./PostItem";
 import { Options, maxHeight, maxWidth } from "../config";
 import HorizontalHandlerbar from "./HorizontalHandlebar";
 import VerticalHandlerbar from "./VerticalHandlebar";
+import DiagonalHandlerbar from "./DiagonalHandlebar";
 
 interface PostContainerProps {
   post: Post;
@@ -41,7 +42,6 @@ export default function PostContainer({
     <div className="flex-center">
       {/** Scaling, width 600px + 8px for handles */}
       <div
-        className="gradient-container"
         style={{
           padding:
             window.screen.width > 608 + maxWidth
@@ -62,13 +62,19 @@ export default function PostContainer({
           } dynamic-padding`}
           style={{
             padding: `${height / 2}px ${width / 2}px`,
-            borderRadius: rendering ? "0" : "2rem",
-            background: options.background,
+            borderRadius: rendering ? "0" : "1rem",
+            background: width == 0 && height == 0 ? "" : options.background,
           }}
           ref={screenshotRef}
         >
           <HorizontalHandlerbar width={width} setWidth={setWidth} side="left" />
-          {/** Disabled due to working weirdly in a flexbox */}
+          <DiagonalHandlerbar
+            width={width}
+            setWidth={setWidth}
+            height={height}
+            setHeight={setHeight}
+            side="left"
+          />
           <VerticalHandlerbar
             height={height}
             setHeight={setHeight}
@@ -87,6 +93,13 @@ export default function PostContainer({
             height={height}
             setHeight={setHeight}
             side={"bottom"}
+          />
+          <DiagonalHandlerbar
+            width={width}
+            setWidth={setWidth}
+            height={height}
+            setHeight={setHeight}
+            side="right"
           />
           <HorizontalHandlerbar
             width={width}
