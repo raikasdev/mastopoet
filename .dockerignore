@@ -1,8 +1,4 @@
 # config files
-#Ignore the git
-.git
-.gitignore
-**/.gitkeep
 **/.DS_Store
 .husky/
 .vscode/
