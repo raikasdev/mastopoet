@@ -1,11 +1,11 @@
 # Mastopoet
 
-The toot screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
+The post screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
 
 ## What?
 
 Mastopoet is an open source screenshot tool for [Mastodon](https://joinmastodon.org), inspired by [poet.so](https://poet.so).
-It allows you to create ✨ stunning ✨ screenshots of your toots, with ability to remove stuff you don't want (bookmark button, publicity symbol, settings button...). And with a theme that's not dependent on the theme of the instance!
+It allows you to create ✨ stunning ✨ screenshots of your posts, with ability to remove stuff you don't want (bookmark button, publicity symbol, settings button...). And with a theme that's not dependent on the theme of the instance!
 
 ## Demo
 
@@ -13,7 +13,7 @@ It allows you to create ✨ stunning ✨ screenshots of your toots, with ability
 
 ## URL Query feature
 
-Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immediately open the toot on Mastopoet.
+Add ?url=<post url> to the end of the Mastopoet URL to generate links that immediately open the post on Mastopoet.
 
 ## Themes available
 

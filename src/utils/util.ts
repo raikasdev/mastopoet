@@ -136,7 +136,7 @@ export function downloadURI(uri: string, name: string) {
 
 export async function submitUrl(url: string) {
   const urlParsed = parseUrl(url);
-  if (!urlParsed) throw new Error("Invalid Toot URL");
+  if (!urlParsed) throw new Error("Invalid Mastodon post URL");
   if (urlParsed.protocol !== "https:")
     throw new Error("Protocol must be HTTPS");
 
@@ -155,7 +155,7 @@ export async function submitUrl(url: string) {
     if (e instanceof AxiosError) {
       if (!e.response) throw new Error("Failed to reach API");
       if (e.response.status === 404)
-        throw new Error("Toot not found. Is it private?");
+        throw new Error("Post not found. Is it private?");
     }
     throw new Error("Unknown error trying to reach Mastodon instance");
   }
@@ -205,7 +205,7 @@ export async function copyAltText(post: Post) {
 
   const content =
     document.getElementById("content")?.innerText ||
-    "Failed to fetch Toot content from Mastopoet";
+    "Failed to fetch post content from Mastopoet";
 
   let attachmentsText = "";
   if (post.attachments.length === 1) {
@@ -229,7 +229,7 @@ export async function copyAltText(post: Post) {
   navigator.clipboard.writeText(
     `A screenshot of post by ${post.displayName} (${
       post.username
-    }) beautified by Mastopoet tool. Toot was posted on ${formatDate(
+    }) beautified by Mastopoet tool. It was posted on ${formatDate(
       post.date,
     )} and has ${post.favourites} favourites, ${post.boosts} boosts and ${
       post.comments

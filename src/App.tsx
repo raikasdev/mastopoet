@@ -87,7 +87,7 @@ function App() {
           setWidth(defaultWidth);
           setCorsAlertOpen(false);
         } catch (e) {
-          setMessage("Query URL is not a valid toot");
+          setMessage("Query URL is not a valid post");
         }
       })();
     }
@@ -100,7 +100,7 @@ function App() {
       <div className="center-text">
         <h1>Mastopoet</h1>
         <p>
-          The Toot screenshot tool, running commit{" "}
+          The Mastodon post screenshot tool, running commit{" "}
           <a
             href="https://github.com/raikasdev/mastopoet"
             className="commit-link"

@@ -17,7 +17,7 @@ export default function SearchForm({ submitUrl }: SearchFormProps) {
       <input
         className="search"
         type="url"
-        placeholder="Link to Toot"
+        placeholder="Link to Mastodon post"
         value={url}
         onChange={(event) => setUrl(event.currentTarget.value)}
         required

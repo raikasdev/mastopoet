@@ -25,10 +25,10 @@ export default function CORSAlert() {
           <strong>CORS issue detected!</strong>
         </span>
         <p>
-          Sorry! Mastopoet could not fetch images in this Toot due to CORS
-          restrictions. Please contact your instance admin and ask them to allow
-          anonymous cross origin on their server. You can link them the
-          documentation in our{" "}
+          Sorry! Mastopoet could not fetch images in this Mastodon post due to
+          CORS restrictions. Please contact your instance's admin and ask them
+          to enable anonymous cross origin on their server. You can link them
+          the documentation in our{" "}
           <a href="https://github.com/raikasdev/mastopoet#user-content-imagesprofile-pictures-not-working">
             GitHub README
           </a>
