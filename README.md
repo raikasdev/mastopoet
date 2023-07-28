@@ -11,9 +11,14 @@ It allows you to create ✨ stunning ✨ screenshots of your toots, with ability
 
 [mastopoet.ohjelmoi.fi](https://mastopoet.ohjelmoi.fi)
 
+## URL Query feature
+
+Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immediately open the toot on Mastopoet.
+
 ## Themes available
 
-- [Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui) (Dark, light coming soon)
+- [Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui) (Dark, Light)
+- Mastodon (Dark, Dark + light interaction labels, Light)
 
 ## TODO
 
