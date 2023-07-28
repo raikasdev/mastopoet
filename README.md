@@ -32,6 +32,7 @@ Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immed
 - [ ] Fix multi image image galleries
 - [ ] Support for non-mastodon links
 - [ ] Alt text generator
+- [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 
 ## Credits
 

@@ -41,13 +41,16 @@ export default function PostContainer({
       <div
         className="gradient-container"
         style={{
-          padding: `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`,
+          padding:
+            window.screen.width > 608 + maxWidth
+              ? `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`
+              : "0",
           transform: `scale(${
             window.screen.width > 608 + maxWidth
               ? 1
               : rendering
               ? 1
-              : window.innerWidth / 608
+              : window.innerWidth / (608 + width)
           })`,
         }}
       >
