@@ -1,3 +1,5 @@
+![Mastopoet Banner, AI generated, by @rolle@mementomori.social](https://raw.githubusercontent.com/raikasdev/mastopoet/main/public/mastopoet.png)
+
 # Mastopoet
 
 The post screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
