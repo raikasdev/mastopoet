@@ -100,7 +100,7 @@ function App() {
       <div className="center-text">
         <h1>Mastopoet</h1>
         <p>
-          The Mastodon post screenshot tool, running commit{" "}
+          The Mastodon post screenshot tool, running release v1.0.0 (
           <a
             href="https://github.com/raikasdev/mastopoet"
             className="commit-link"
@@ -109,6 +109,7 @@ function App() {
             {/** @ts-ignore */}
             {__COMMIT_HASH__}
           </a>
+          )
         </p>
         <p>{message}</p>
       </div>

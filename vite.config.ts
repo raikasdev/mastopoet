@@ -5,7 +5,7 @@ import stylelint from "vite-plugin-stylelint";
 // @ts-ignore
 import { execSync } from "child_process"; // A node library, safe to ignore
 
-const commitHash = execSync("git rev-parse --short HEAD").toString();
+const commitHash = execSync("git rev-parse --short HEAD").toString().trim();
 
 // https://vitejs.dev/config/
 export default defineConfig({
