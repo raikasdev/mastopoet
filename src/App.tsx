@@ -11,6 +11,7 @@ import {
   defaultWidth,
   maxHeight,
   maxWidth,
+  welcomePost,
 } from "./config";
 import SearchForm from "./components/SearchForm";
 import { useObjectState } from "./utils/use-object-state";
@@ -25,7 +26,7 @@ import "./themes/Mastodon.scss";
 
 function App() {
   const [message, setMessage] = useState("");
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState<Post | null>(welcomePost);
   const [rendering, setRendering] = useState(false);
   const [options, setOptions] = useObjectState<Options>({
     theme: "bird-ui",
@@ -61,6 +62,25 @@ function App() {
       setRendering(false);
     })();
   }, [rendering]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const url = params.get("url");
+
+    if (url) {
+      (async () => {
+        try {
+          const response = await submitUrl(url);
+          setPost(response);
+          setHeight(defaultHeight);
+          setWidth(defaultWidth);
+        } catch (e) {
+          setMessage("Query URL is not a valid toot");
+        }
+      })();
+    }
+  }, []);
+
   /** End screenshotting */
 
   return (

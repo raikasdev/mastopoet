@@ -22,8 +22,8 @@ It allows you to create ✨ stunning ✨ screenshots of your toots, with ability
 - [x] Mastodon theme port
 - [ ] Customizable date format
 - [ ] A logo (to website embed)
-- [ ] Read toot URL from query
-- [ ] Default Toot with information
+- [x] Read toot URL from query
+- [x] Default Toot with information
 - [ ] Fix multi image image galleries
 - [ ] Support for non-mastodon links
 

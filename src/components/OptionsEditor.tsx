@@ -97,7 +97,7 @@ export default function OptionsEditor({ options, setOptions }: OptionsProps) {
               stroke="currentColor"
               fill="none"
               strokeLinecap="round"
-              stroke-LLinejoin="round"
+              strokeLinejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M11 7l6 6"></path>
