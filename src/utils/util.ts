@@ -34,11 +34,34 @@ export const truncateString = (str: string, num: number) => {
   }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function mastodonStatusToPost(obj: any, host: string): Post {
-  const username = obj.account.acct.includes("@")
-    ? `@${obj.account.acct}`
-    : `@${obj.account.acct}@${host}`; // Lazy check
+export async function mastodonStatusToPost(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  obj: any,
+  host: string,
+): Promise<Post> {
+  let username = obj.account.acct;
+  if (!username.includes("@")) {
+    console.debug("Local toot, looking up username from WebFinger...");
+    // A local username, time for WebFinger lookup...
+    const webFingerURL = new URL(`https://${host}/.well-known/webfinger`);
+    webFingerURL.searchParams.set("resource", `acct:${username}@${host}`);
+    try {
+      const res = await axios.get(webFingerURL.toString(), {
+        headers: {
+          "User-Agent": "mastopoet/1.0.0",
+        },
+      });
+
+      const subject = res.data.subject;
+
+      username = new URL(subject).pathname;
+    } catch (e) {
+      // If WebFinger lookup fails, just resort to lazy domain
+      username = `${username}@${host}`;
+    }
+  }
+
+  username = `@${username}`;
 
   // Emoji replacer (quality code 100%)
   let content = obj.content;
