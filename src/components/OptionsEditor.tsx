@@ -3,6 +3,7 @@ import { InteractionsPreference, Options, Theme } from "../config";
 interface OptionsProps {
   options: Options;
   setOptions: (options: Options) => void;
+  width: number;
 }
 
 const colorPresets = [
@@ -15,30 +16,56 @@ const colorPresets = [
   "linear-gradient(to bottom right, #12c2e9, #c471ed, #f64f59)",
 ];
 
-export default function OptionsEditor({ options, setOptions }: OptionsProps) {
+export default function OptionsEditor({
+  options,
+  setOptions,
+  width,
+}: OptionsProps) {
   return (
     <div className="options-editor">
-      <div className="option">
-        <label htmlFor="theme-select">Theme</label>
-        <select
-          name="theme-select"
-          id="theme-select"
-          value={options.theme}
-          onChange={(event) =>
-            setOptions({
-              ...options,
-              theme: event.currentTarget.value as Theme,
-            })
-          }
-        >
-          <option value="bird-ui">Bird UI (Dark)</option>
-          <option value="bird-ui-light">Bird UI (Light)</option>
-          <option value="mastodon">Mastodon (Dark)</option>
-          <option value="mastodon-white-interactions">
-            Mastodon (Dark + light interactions)
-          </option>
-          <option value="mastodon-light">Mastodon (Light)</option>
-        </select>
+      <div className="option-stack">
+        <div className="option">
+          <label htmlFor="theme-select">Theme</label>
+          <select
+            name="theme-select"
+            id="theme-select"
+            value={options.theme}
+            onChange={(event) =>
+              setOptions({
+                ...options,
+                theme: event.currentTarget.value as Theme,
+              })
+            }
+          >
+            <option value="bird-ui">Bird UI (Dark)</option>
+            <option value="bird-ui-light">Bird UI (Light)</option>
+            <option value="mastodon">Mastodon (Dark)</option>
+            <option value="mastodon-white-interactions">
+              Mastodon (Dark + light interactions)
+            </option>
+            <option value="mastodon-light">Mastodon (Light)</option>
+          </select>
+        </div>
+        <div className="option">
+          <label htmlFor="scale-select">Output scale</label>
+          <select
+            name="scale-select"
+            id="scale-select"
+            value={options.scale}
+            onChange={(event) =>
+              setOptions({
+                ...options,
+                scale: parseInt(event.currentTarget.value),
+              })
+            }
+          >
+            <option value="1">1x (width {600 + width})</option>
+            <option value="2">2x (width {(600 + width) * 2})</option>
+            <option value="3">3x (width {(600 + width) * 3})</option>
+            <option value="4">4x (width {(600 + width) * 4})</option>
+            <option value="6">6x (width {(600 + width) * 6})</option>
+          </select>
+        </div>
       </div>
       <div className="option">
         <label htmlFor="interactions-select">Interactions appearance</label>

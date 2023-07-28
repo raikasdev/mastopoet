@@ -25,6 +25,7 @@ export interface Options {
   theme: Theme;
   interactions: InteractionsPreference;
   background: string;
+  scale: number;
 }
 
 export const welcomePost: Post = {

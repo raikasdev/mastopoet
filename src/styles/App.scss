@@ -67,6 +67,12 @@
   justify-content: center;
   margin: 1rem 0 2rem;
 
+  .option-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
   .option {
     display: flex;
     flex-direction: column;

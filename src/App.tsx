@@ -32,6 +32,7 @@ function App() {
     theme: "bird-ui",
     interactions: "feed",
     background: "linear-gradient(to right, #fc5c7d, #6a82fb)",
+    scale: 2,
   });
   const [width, setWidth] = useMinmaxState(defaultWidth, 0, maxWidth);
   const [height, setHeight] = useMinmaxState(defaultHeight, 0, maxHeight);
@@ -51,7 +52,7 @@ function App() {
         const canvas = await html2canvas(screenshotRef.current, {
           allowTaint: true,
           useCORS: true,
-          scale: 2,
+          scale: options.scale,
           backgroundColor: "#1e2028", // TODO: From theme!
           ignoreElements: (element) => element.classList.contains("handlebar"),
         });
@@ -132,7 +133,13 @@ function App() {
           }
         }}
       />
-      {post && <OptionsEditor options={options} setOptions={setOptions} />}
+      {post && (
+        <OptionsEditor
+          options={options}
+          setOptions={setOptions}
+          width={width}
+        />
+      )}
       <div className="flex-center button-grid" style={{ marginBottom: "2rem" }}>
         {post && (
           <>
