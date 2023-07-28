@@ -26,7 +26,7 @@ import "./themes/Mastodon.scss";
 function App() {
   const [message, setMessage] = useState("");
   const [post, setPost] = useState<Post | null>(welcomePost);
-  const [rendering, setRendering] = useState(true);
+  const [rendering, setRendering] = useState(false);
   const [options, setOptions] = useObjectState<Options>({
     theme: "bird-ui",
     interactions: "feed",
