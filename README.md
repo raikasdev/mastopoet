@@ -25,6 +25,7 @@ It allows you to create ✨ stunning ✨ screenshots of your toots, with ability
 - [ ] Read toot URL from query
 - [ ] Default Toot with information
 - [ ] Fix multi image image galleries
+- [ ] Support for non-mastodon links
 
 ## Credits
 
