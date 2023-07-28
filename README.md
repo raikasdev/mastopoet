@@ -1,6 +1,6 @@
 # Mastopoet
 
-The Toot screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
+The toot screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
 
 ## What?
 
@@ -44,7 +44,7 @@ You can build with:
 docker build -t mastopoet .
 ```
 
-It will build the application and deploy in a nginx instance, when the image is builded you can run using:
+It will build the application and deploy in an nginx instance, when the image is built you can run using:
 
 ```console
 docker run -d -p 80:80 mastopoet
@@ -60,9 +60,9 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [ ] Customizable date format
 - [ ] A logo (to website embed)
 - [x] Read toot URL from query
-- [x] Default Toot with information
+- [x] Default toot with information
 - [ ] Fix multi image image galleries
-- [ ] Support for non-mastodon links
+- [ ] Support for non-Mastodon links
 - [x] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 - [x] Detect CORS failed images and show user info box
@@ -71,4 +71,4 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 
 - [Mastodon Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui/) by Roni Laukkarinen, licensed under MIT
 - [Mastodon](https://github.com/mastodon/mastodon)
-- [Tabler Icons](https://tabler-icons.io), linced under MIT
+- [Tabler Icons](https://tabler-icons.io), licensed under MIT
