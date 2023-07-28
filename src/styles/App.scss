@@ -8,12 +8,6 @@
   text-align: center;
 }
 
-.hide-desktop {
-  @media screen and ((min-width: 1024px) or (pointer: rough)) {
-    display: none;
-  }
-}
-
 .search-form {
   display: flex;
   font-family:
@@ -124,6 +118,26 @@
 
   @media screen and (max-width: 400px) {
     flex-direction: column;
+  }
+}
+
+.alert {
+  background-color: #f91880bf;
+  border-radius: 1rem;
+  margin: 0.5rem 0;
+  max-width: 600px;
+  padding: 1rem;
+
+  .alert-title {
+    align-items: center;
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  a {
+    color: white;
   }
 }
 

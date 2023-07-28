@@ -13,6 +13,7 @@ interface PostContainerProps {
   rendering: boolean;
   screenshotRef: Ref<HTMLDivElement>;
   options: Options;
+  onImageLoadError: () => void;
 }
 
 export default function PostContainer({
@@ -24,6 +25,7 @@ export default function PostContainer({
   rendering,
   screenshotRef,
   options,
+  onImageLoadError,
 }: PostContainerProps) {
   const ref = useRef<HTMLDivElement>(null);
   const PostItemReffed = useMemo(
@@ -77,6 +79,7 @@ export default function PostContainer({
               ref={ref}
               interactionsPref={options.interactions}
               post={post}
+              onImageLoadError={onImageLoadError}
             />
           </div>
           <VerticalHandlerbar

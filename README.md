@@ -26,6 +26,8 @@ This is due to CORS. I cannot do anything about it, as the whole process is done
 
 If you want to get Mastopoet working on your instance, contact your admin and ask them to allow anonymous CORS (crossOrigin: "anonymous") requests for their Mastodon media server.
 
+**For admins** this means they need to add the `Access-Control-Allow-Origin` header to the server providing your users with images hosted on Mastodon. You can set it to '\*', or allow just Mastopoet with 'https://mastopoet.ohjelmoi.fi'. There's more technical information on [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image).
+
 ## Deploying
 
 You can use Docker (instructions below), or simply host the website on a static platform. Mastopoet is a React SPA, compiled by Vite, allowing it to be deployed to pretty much any hosting service. My recommendations are Cloudflare Pages, Netlify and Github Pages.
@@ -63,6 +65,7 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [ ] Support for non-mastodon links
 - [x] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
+- [x] Detect CORS failed images and show user info box
 
 ## Credits
 

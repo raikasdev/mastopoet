@@ -22,6 +22,7 @@ import "./styles/App.scss";
 // Themes
 import "./themes/BirdUi.scss";
 import "./themes/Mastodon.scss";
+import CORSAlert from "./components/CORSAlert";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -34,6 +35,8 @@ function App() {
   });
   const [width, setWidth] = useMinmaxState(defaultWidth, 0, maxWidth);
   const [height, setHeight] = useMinmaxState(defaultHeight, 0, maxHeight);
+
+  const [corsAlertOpen, setCorsAlertOpen] = useState(false);
 
   /** Screenshotting */
   const screenshotRef = useRef<HTMLDivElement>(null);
@@ -82,6 +85,7 @@ function App() {
           setPost(response);
           setHeight(defaultHeight);
           setWidth(defaultWidth);
+          setCorsAlertOpen(false);
         } catch (e) {
           setMessage("Query URL is not a valid toot");
         }
@@ -108,6 +112,8 @@ function App() {
         </p>
         <p>{message}</p>
       </div>
+      {corsAlertOpen && <CORSAlert />}
+
       <SearchForm
         submitUrl={async (url) => {
           setMessage("");
@@ -116,6 +122,7 @@ function App() {
             setPost(response);
             setHeight(defaultHeight);
             setWidth(defaultWidth);
+            setCorsAlertOpen(false);
           } catch (e) {
             if (e instanceof Error) {
               return setMessage(e.message);
@@ -147,6 +154,7 @@ function App() {
           rendering={rendering}
           screenshotRef={screenshotRef}
           options={options}
+          onImageLoadError={() => setCorsAlertOpen(true)}
         />
       )}
     </>

@@ -26,12 +26,14 @@ export interface PostItemProps {
   post: Post;
   refInstance?: ForwardedRef<HTMLDivElement>;
   interactionsPref: InteractionsPreference;
+  onImageLoadError: () => void;
 }
 
 export default function PostItem({
   post,
   refInstance,
   interactionsPref,
+  onImageLoadError,
 }: PostItemProps) {
   const {
     displayName,
@@ -49,7 +51,12 @@ export default function PostItem({
     <div className="toot" ref={refInstance}>
       <div className="profile">
         <div className="avatar">
-          <img src={avatarUrl} alt={displayName} crossOrigin="anonymous" />
+          <img
+            src={avatarUrl}
+            alt={displayName}
+            crossOrigin="anonymous"
+            onError={onImageLoadError}
+          />
         </div>
         <span className="display-name">
           <bdi>
@@ -73,6 +80,7 @@ export default function PostItem({
                 className="attachment"
                 style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
                 crossOrigin="anonymous"
+                onError={onImageLoadError}
               />
             );
           if (attachment.type === "gifv")
@@ -86,6 +94,7 @@ export default function PostItem({
                 playsInline
                 controls={false}
                 crossOrigin="anonymous"
+                onError={onImageLoadError}
               />
             );
           return <div key={attachment.url}></div>;
