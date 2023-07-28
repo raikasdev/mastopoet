@@ -31,6 +31,7 @@ Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immed
 - [x] Default Toot with information
 - [ ] Fix multi image image galleries
 - [ ] Support for non-mastodon links
+- [ ] Alt text generator
 
 ## Credits
 
