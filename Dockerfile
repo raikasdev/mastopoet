@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm ci --verbose --no-optional
+RUN npm ci --verbose
 
 COPY . .
 
