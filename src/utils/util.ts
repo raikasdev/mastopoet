@@ -79,11 +79,14 @@ export async function mastodonStatusToPost(
       type: string;
       url: string;
       meta: { original: { aspect: number } };
+      description?: string;
     }): Attachment => {
+      console.log(mediaAttachment);
       return {
         type: mediaAttachment.type,
         url: mediaAttachment.url,
         aspectRatio: mediaAttachment.meta.original.aspect,
+        description: mediaAttachment.description,
       };
     },
   );
@@ -164,4 +167,56 @@ export function formatDate(date: Date) {
   const minutes = formattedDate.getMinutes().toString().padStart(2, "0");
 
   return `${month} ${day}, ${year}, ${hours}:${minutes}`;
+}
+
+export async function copyAltText(post: Post) {
+  try {
+    const permRes = await navigator.permissions.query({
+      name: "clipboard-write",
+    } as never);
+
+    if (permRes.state === "denied" || permRes.state === "prompt")
+      throw new Error("Access to clipboard was blocked");
+  } catch (e) {
+    if (e instanceof TypeError) {
+      console.log("Browser does not support clipboard-write permission");
+    } else {
+      throw new Error("Access to clipboard was blocked");
+    }
+  }
+
+  const content =
+    document.getElementById("content")?.innerText ||
+    "Failed to fetch Toot content from Mastopoet";
+
+  let attachmentsText = "";
+  if (post.attachments.length === 1) {
+    const altText = post.attachments[0].description;
+    attachmentsText = `Post has one attachment. ${
+      altText
+        ? `The attachments alt text is:\n${altText}`
+        : "It does not have an alt text set."
+    }`;
+  } else if (post.attachments.length > 1) {
+    attachmentsText = `Post has ${post.attachments.length} attachments.`;
+    post.attachments.forEach((attachment, index) => {
+      attachmentsText += `\nAttachment ${index + 1}${
+        attachment.description
+          ? `'s alt text is: ${attachment.description}`
+          : " does not have an alt text."
+      }`;
+    });
+  }
+
+  navigator.clipboard.writeText(
+    `A screenshot of post by ${post.displayName} (${
+      post.username
+    }) beautified by Mastopoet tool. Toot was posted on ${formatDate(
+      post.date,
+    )} and has ${post.favourites} favourites, ${post.boosts} boosts and ${
+      post.comments
+    } replies.\n\n${content}${
+      attachmentsText !== "" ? `\n\n${attachmentsText}` : ""
+    }`,
+  );
 }

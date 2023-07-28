@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Post } from "./components/PostItem";
 import html2canvas from "html2canvas";
-import { downloadURI, submitUrl } from "./utils/util";
+import { copyAltText, downloadURI, submitUrl } from "./utils/util";
 import PostContainer from "./components/PostContainer";
 import useMinmaxState from "./utils/use-minmax-state";
 import {
@@ -116,11 +116,16 @@ function App() {
         }}
       />
       {post && <OptionsEditor options={options} setOptions={setOptions} />}
-      <div className="flex-center" style={{ marginBottom: "2rem" }}>
+      <div className="flex-center button-grid" style={{ marginBottom: "2rem" }}>
         {post && (
-          <button className="render-button" onClick={exportImage}>
-            Download .png
-          </button>
+          <>
+            <button className="render-button" onClick={exportImage}>
+              Download .png
+            </button>
+            <button className="render-button" onClick={() => copyAltText(post)}>
+              Copy ALT text
+            </button>
+          </>
         )}
       </div>
       {post && (

@@ -18,6 +18,7 @@ export interface Attachment {
   type: string;
   url: string;
   aspectRatio: number;
+  description?: string;
 }
 
 export interface PostItemProps {
@@ -56,7 +57,11 @@ export default function PostItem({
           <span className="username">{username}</span>
         </span>
       </div>
-      <div className="content" dangerouslySetInnerHTML={{ __html: content }} />
+      <div
+        className="content"
+        id="content"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
       <div className="image-gallery">
         {attachments.map((attachment) => {
           if (attachment.type === "image")
