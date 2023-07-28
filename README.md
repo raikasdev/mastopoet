@@ -20,6 +20,30 @@ Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immed
 - [Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui) (Dark, Light)
 - Mastodon (Dark, Dark + light interaction labels, Light)
 
+## Deploying
+
+You can use Docker (instructions below), or simply host the website on a static platform. Mastopoet is a React SPA, compiled by Vite, allowing it to be deployed to pretty much any hosting service. My recommendations are Cloudflare Pages, Netlify and Github Pages.
+
+First, install dependencies with `npm install` and then build the app with `npm run build`. Simple as that! The application is in the `dist` directory.
+
+## Building with docker
+
+You can use docker for deploying a production ready instance of Mastopoet.
+
+You can build with:
+
+```console
+docker build -t mastopoet .
+```
+
+It will build the application and deploy in a nginx instance, when the image is builded you can run using:
+
+```console
+docker run -d -p 80:80 mastopoet
+```
+
+For more options, see [nginx container options at dockerhub](https://hub.docker.com/_/nginx)
+
 ## TODO
 
 - [x] Customizable gradient
@@ -34,18 +58,6 @@ Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immed
 - [ ] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 
-## Building with docker
-You can use docker for deploying a production ready instance of Mastopoet. 
-
-You can build with:
-```console
-docker build -t mastopoet .
-```
-It will build the application and deploy in a nginx instance, when the image is builded you can run using:
-```console
-docker run -d -p 80:80 mastopoet
-```
-For more options, see [nginx container options at dockerhub](https://hub.docker.com/_/nginx).
 ## Credits
 
 - [Mastodon Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui/) by Roni Laukkarinen, licensed under MIT
