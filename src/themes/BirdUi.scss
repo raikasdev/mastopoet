@@ -150,16 +150,22 @@
     }
 
     // Notice! Image attachments are not inside content.
-    .image-gallery {
-      box-sizing: border-box;
+    .gallery-holder {
       padding-left: calc($avatar-size + $message-gap);
-      width: 100%;
-
-      .attachment {
+      .image-gallery {
         border: 1px solid var(--color-border);
         border-radius: 16px;
-        object-fit: cover;
+        box-sizing: border-box;
+        display: grid;
+
         width: 100%;
+
+        .attachment {
+          border-radius: 8px;
+          height: 100%;
+          object-fit: cover;
+          width: 100%;
+        }
       }
     }
 

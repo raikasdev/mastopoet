@@ -58,10 +58,10 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [x] Bird UI light theme port
 - [x] Mastodon theme port
 - [ ] Customizable date format
-- [ ] A logo (to website embed)
+- [x] A logo (to website embed)
 - [x] Read toot URL from query
 - [x] Default toot with information
-- [ ] Fix multi image image galleries
+- [x] Fix multi image image galleries
 - [ ] Support for non-Mastodon links
 - [x] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))

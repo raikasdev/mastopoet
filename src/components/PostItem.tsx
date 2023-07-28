@@ -76,35 +76,44 @@ export default function PostItem({
         id="content"
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      <div className="image-gallery">
-        {attachments.map((attachment) => {
-          if (attachment.type === "image")
-            return (
-              <img
-                key={attachment.url}
-                src={attachment.url}
-                className="attachment"
-                style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
-                crossOrigin="anonymous"
-                onError={onImageLoadError}
-              />
-            );
-          if (attachment.type === "gifv")
-            return (
-              <video
-                key={attachment.url}
-                src={attachment.url}
-                className="attachment"
-                style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
-                muted
-                playsInline
-                controls={false}
-                crossOrigin="anonymous"
-                onError={onImageLoadError}
-              />
-            );
-          return <div key={attachment.url}></div>;
-        })}
+      <div className="gallery-holder">
+        <div
+          className="image-gallery"
+          style={{
+            gridTemplateColumns: `repeat(${
+              attachments.length <= 2 ? attachments.length : 2
+            }, minmax(0, 1fr))`,
+          }}
+        >
+          {attachments.map((attachment) => {
+            if (attachment.type === "image")
+              return (
+                <img
+                  key={attachment.url}
+                  src={attachment.url}
+                  className="attachment"
+                  style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
+                  crossOrigin="anonymous"
+                  onError={onImageLoadError}
+                />
+              );
+            if (attachment.type === "gifv")
+              return (
+                <video
+                  key={attachment.url}
+                  src={attachment.url}
+                  className="attachment"
+                  style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
+                  muted
+                  playsInline
+                  controls={false}
+                  crossOrigin="anonymous"
+                  onError={onImageLoadError}
+                />
+              );
+            return <div key={attachment.url}></div>;
+          })}
+        </div>
       </div>
       <div className={`action-bar action-bar-${interactionsPref}`}>
         <span className="action-bar-datetime">{formatDate(date)}</span>
