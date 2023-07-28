@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Post } from "./components/PostItem";
 import html2canvas from "html2canvas";
 import { downloadURI, submitUrl } from "./utils/util";
-import MobileAlert from "./components/MobileAlert";
 import PostContainer from "./components/PostContainer";
 import useMinmaxState from "./utils/use-minmax-state";
 import {
@@ -27,7 +26,7 @@ import "./themes/Mastodon.scss";
 function App() {
   const [message, setMessage] = useState("");
   const [post, setPost] = useState<Post | null>(welcomePost);
-  const [rendering, setRendering] = useState(false);
+  const [rendering, setRendering] = useState(true);
   const [options, setOptions] = useObjectState<Options>({
     theme: "bird-ui",
     interactions: "feed",
@@ -54,7 +53,7 @@ function App() {
           ignoreElements: (element) => element.classList.contains("handlebar"),
         });
         try {
-          downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
+          downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoet.png`);
         } catch (e) {
           setMessage("Saving failed due to CORS issues.");
         }
@@ -98,7 +97,6 @@ function App() {
             {__COMMIT_HASH__}
           </a>
         </p>
-        <MobileAlert />
         <p>{message}</p>
       </div>
       <SearchForm

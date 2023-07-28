@@ -25,8 +25,6 @@ export default function PostContainer({
   screenshotRef,
   options,
 }: PostContainerProps) {
-  const isMobile = window.innerWidth < 1024;
-
   const ref = useRef<HTMLDivElement>(null);
   const PostItemReffed = useMemo(
     () =>
@@ -43,15 +41,16 @@ export default function PostContainer({
       <div
         className="gradient-container"
         style={{
-          padding: isMobile
-            ? "0"
-            : `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`,
+          padding:
+            window.screen.width > 608 + maxWidth
+              ? `${(maxHeight - height) / 2}px ${(maxWidth - width) / 2}px`
+              : "0",
           transform: `scale(${
             window.screen.width > 608 + maxWidth
               ? 1
               : rendering
               ? 1
-              : window.innerWidth / 608
+              : window.innerWidth / (608 + width)
           })`,
         }}
       >
@@ -60,7 +59,7 @@ export default function PostContainer({
             width == 0 && height == 0 ? "" : "gradient"
           } dynamic-padding`}
           style={{
-            padding: isMobile ? "0" : `${height / 2}px ${width / 2}px`,
+            padding: `${height / 2}px ${width / 2}px`,
             borderRadius: rendering ? "0" : "2rem",
             background: options.background,
           }}
