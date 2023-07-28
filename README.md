@@ -20,6 +20,12 @@ Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immed
 - [Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui) (Dark, Light)
 - Mastodon (Dark, Dark + light interaction labels, Light)
 
+## Images/profile pictures not working?
+
+This is due to CORS. I cannot do anything about it, as the whole process is done client-side.
+
+If you want to get Mastopoet working on your instance, contact your admin and ask them to allow anonymous CORS (crossOrigin: "anonymous") requests for their Mastodon media server.
+
 ## Deploying
 
 You can use Docker (instructions below), or simply host the website on a static platform. Mastopoet is a React SPA, compiled by Vite, allowing it to be deployed to pretty much any hosting service. My recommendations are Cloudflare Pages, Netlify and Github Pages.
@@ -55,7 +61,7 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [x] Default Toot with information
 - [ ] Fix multi image image galleries
 - [ ] Support for non-mastodon links
-- [ ] Alt text generator
+- [x] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 
 ## Credits
