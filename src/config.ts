@@ -28,6 +28,7 @@ export interface Options {
 
 export const welcomePost: Post = {
   username: "@raikas@mementomori.social",
+  plainUsername: "raikas",
   displayName: "Roni Äikäs ⚛️",
   attachments: [],
   avatarUrl:

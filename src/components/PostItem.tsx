@@ -4,6 +4,7 @@ import { InteractionsPreference } from "../config";
 
 export interface Post {
   displayName: string;
+  plainUsername: string;
   username: string;
   avatarUrl: string;
   content: string; // HTML!

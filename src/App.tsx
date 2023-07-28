@@ -52,8 +52,17 @@ function App() {
           backgroundColor: "#1e2028", // TODO: From theme!
           ignoreElements: (element) => element.classList.contains("handlebar"),
         });
+        const timeStamp = post?.date
+          .toLocaleDateString("en-GB")
+          .split("/")
+          .join(""); // DDMMYYYY
         try {
-          downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoet.png`);
+          downloadURI(
+            canvas.toDataURL("image/png", 1.0),
+            `mastopoet-${
+              post?.plainUsername || "unknown-user"
+            }-${timeStamp}.png`,
+          );
         } catch (e) {
           setMessage("Saving failed due to CORS issues.");
         }

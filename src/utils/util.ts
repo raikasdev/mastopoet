@@ -113,6 +113,7 @@ export async function mastodonStatusToPost(
 
   return {
     username,
+    plainUsername: obj.account.username,
     displayName,
     avatarUrl: obj.account.avatar,
     boosts: obj.reblogs_count,
