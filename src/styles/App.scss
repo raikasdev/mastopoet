@@ -14,21 +14,6 @@
   }
 }
 
-.alert {
-  background-color: #f91880bf;
-  border-radius: 1rem;
-  margin: 0.5rem 0;
-  padding: 0.25rem;
-
-  .alert-title {
-    align-items: center;
-    display: flex;
-    gap: 0.25rem;
-    justify-content: center;
-    margin-top: 1rem;
-  }
-}
-
 .search-form {
   display: flex;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, " Apple Color Emoji", Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;

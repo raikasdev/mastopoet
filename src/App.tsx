@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Post } from "./components/PostItem";
 import html2canvas from "html2canvas";
 import { downloadURI, submitUrl } from "./utils/util";
-import MobileAlert from "./components/MobileAlert";
 import PostContainer from "./components/PostContainer";
 import useMinmaxState from "./utils/use-minmax-state";
 import {
@@ -98,7 +97,6 @@ function App() {
             {__COMMIT_HASH__}
           </a>
         </p>
-        <MobileAlert />
         <p>{message}</p>
       </div>
       <SearchForm
