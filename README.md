@@ -72,3 +72,4 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [Mastodon Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui/) by Roni Laukkarinen, licensed under MIT
 - [Mastodon](https://github.com/mastodon/mastodon)
 - [Tabler Icons](https://tabler-icons.io), licensed under MIT
+- The beautiful AI generated OpenGraph image, created by [Roni Laukkarinen](https://mementomori.social/@rolle)
