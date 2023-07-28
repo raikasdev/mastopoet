@@ -1,14 +1,20 @@
 import axios, { AxiosError } from "axios";
 import { Attachment, Post } from "../components/PostItem";
 
-const POST_REGEX = /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/;
+const POST_REGEXES = [
+  /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/, // instace.social/@user/postid
+  /^\/users\/\w+(?:@[\w-.]+)?\/statuses\/(\d+)$/, // instance.social/users/user/statuses/postid
+];
 
 export function parseUrl(inputURL: string) {
   try {
     const url = new URL(inputURL);
-    const regexMatch = url.pathname.match(POST_REGEX);
+    const regex = POST_REGEXES.find((regex) => url.pathname.match(regex));
+    if (!regex) return null;
 
+    const regexMatch = url.pathname.match(regex);
     if (!regexMatch) return null;
+
     const postId = parseInt(regexMatch[1]);
 
     if (isNaN(postId)) return null;
