@@ -33,6 +33,18 @@ Add ?url=<toot url> to the end of the Mastopoet URL to generate links that immed
 - [ ] Support for non-mastodon links
 - [ ] Alt text generator
 
+## Building with docker
+You can use docker for deploying a production ready instance of Mastopoet. 
+
+You can build with:
+```console
+docker build -t mastopoet .
+```
+It will build the application and deploy in a nginx instance, when the image is builded you can run using:
+```console
+docker run -d -p 80:80 mastopoet
+```
+For more options, see [nginx container options at dockerhub](https://hub.docker.com/_/nginx).
 ## Credits
 
 - [Mastodon Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui/) by Roni Laukkarinen, licensed under MIT
