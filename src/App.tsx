@@ -54,7 +54,7 @@ function App() {
           ignoreElements: (element) => element.classList.contains("handlebar"),
         });
         try {
-          downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoat.png`);
+          downloadURI(canvas.toDataURL("image/png", 1.0), `mastopoet.png`);
         } catch (e) {
           setMessage("Saving failed due to CORS issues.");
         }
