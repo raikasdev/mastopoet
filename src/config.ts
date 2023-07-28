@@ -32,8 +32,7 @@ export const welcomePost: Post = {
   plainUsername: "raikas",
   displayName: "Roni Äikäs ⚛️",
   attachments: [],
-  avatarUrl:
-    "https://media.mementomori.social/accounts/avatars/110/666/945/922/059/535/original/0cbd49bb8be6d45d.jpg",
+  avatarUrl: "/raikasdev.jpg",
   boosts: 0,
   comments: 0,
   favourites: 0,
