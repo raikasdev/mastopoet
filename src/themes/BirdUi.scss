@@ -1,6 +1,24 @@
 .theme-bird-ui,
 .theme-bird-ui-light {
-  $font-stack: system-ui, -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Inter, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif, " Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  $font-stack: system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    avenir next,
+    avenir,
+    segoe ui,
+    Inter,
+    helvetica neue,
+    helvetica,
+    Cantarell,
+    Ubuntu,
+    roboto,
+    noto,
+    arial,
+    sans-serif,
+    " Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
   $line-height: 22px;
   $profile-name-gap: 6px;
   $message-gap: 12px;
@@ -52,6 +70,14 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+
+          .emoji {
+            height: 1em;
+            margin: -1px 0 0;
+            object-fit: contain;
+            vertical-align: middle;
+            width: 1em;
+          }
         }
 
         .username {

@@ -1,5 +1,5 @@
 import { ForwardedRef } from "react";
-import { formatDate, truncateString } from "../utils/util";
+import { formatDate } from "../utils/util";
 import { InteractionsPreference } from "../config";
 
 export interface Post {
@@ -52,7 +52,7 @@ export default function PostItem({
         </div>
         <span className="display-name">
           <bdi>
-            <strong>{truncateString(displayName, 30)}</strong>
+            <strong dangerouslySetInnerHTML={{ __html: displayName }}></strong>
           </bdi>
           <span className="username">{username}</span>
         </span>

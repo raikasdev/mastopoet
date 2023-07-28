@@ -91,12 +91,23 @@ export async function mastodonStatusToPost(
     },
   );
 
+  let displayName = truncateString(
+    obj.account.display_name === ""
+      ? obj.account.username
+      : obj.account.display_name,
+    30,
+  );
+
+  obj.account.emojis.forEach((emoji: { url: string; shortcode: string }) => {
+    displayName = displayName.replaceAll(
+      `:${emoji.shortcode}:`,
+      `<img class="emoji" src="${emoji.url}" />`,
+    );
+  });
+
   return {
     username,
-    displayName:
-      obj.account.display_name === ""
-        ? obj.account.username
-        : obj.account.display_name,
+    displayName,
     avatarUrl: obj.account.avatar,
     boosts: obj.reblogs_count,
     comments: obj.replies_count,
