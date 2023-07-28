@@ -80,6 +80,7 @@ export default function PostContainer({
               interactionsPref={options.interactions}
               post={post}
               onImageLoadError={onImageLoadError}
+              options={options}
             />
           </div>
           <VerticalHandlerbar

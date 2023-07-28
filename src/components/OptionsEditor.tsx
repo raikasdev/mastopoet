@@ -54,6 +54,7 @@ export default function OptionsEditor({ options, setOptions }: OptionsProps) {
           }
         >
           <option value="feed">Feed (icons)</option>
+          <option value="feed no-date">Feed (icons, no date)</option>
           <option value="normal">Normal (text)</option>
           <option value="normal no-replies">Normal (text, no replies)</option>
           <option value="hidden">Hidden</option>

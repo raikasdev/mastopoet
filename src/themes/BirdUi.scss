@@ -55,6 +55,7 @@
 
     .profile {
       display: flex;
+      font-size: 15px;
       gap: 0.75em;
       height: 0.75rem;
 
@@ -86,6 +87,22 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+        }
+
+        .datetime {
+          color: var(--color-text-dim);
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &::before {
+            align-items: center;
+            color: var(--color-text-dim);
+            content: "·";
+            line-height: 22px;
+            margin-right: 8px;
+          }
         }
       }
 

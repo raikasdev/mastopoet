@@ -1,6 +1,6 @@
 import { ForwardedRef } from "react";
 import { formatDate } from "../utils/util";
-import { InteractionsPreference } from "../config";
+import { InteractionsPreference, Options } from "../config";
 
 export interface Post {
   displayName: string;
@@ -27,6 +27,7 @@ export interface PostItemProps {
   refInstance?: ForwardedRef<HTMLDivElement>;
   interactionsPref: InteractionsPreference;
   onImageLoadError: () => void;
+  options: Options;
 }
 
 export default function PostItem({
@@ -34,6 +35,7 @@ export default function PostItem({
   refInstance,
   interactionsPref,
   onImageLoadError,
+  options,
 }: PostItemProps) {
   const {
     displayName,
@@ -63,6 +65,10 @@ export default function PostItem({
             <strong dangerouslySetInnerHTML={{ __html: displayName }}></strong>
           </bdi>
           <span className="username">{username}</span>
+          {/** Replace with :has when Firefox starts supporting it */}
+          {options.interactions === "feed" && (
+            <span className="datetime">Jul 28, 2023, 17:11</span>
+          )}
         </span>
       </div>
       <div

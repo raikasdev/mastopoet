@@ -92,6 +92,7 @@
     gap: 0rem;
     max-width: calc(600px - 4rem);
     padding: 2rem;
+    position: relative;
     width: 100%;
 
     .profile {
@@ -126,6 +127,15 @@
           color: var(--color-text-username);
           height: 1.5rem;
           overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .datetime {
+          color: var(--color-text-ultradim);
+          overflow: hidden;
+          position: absolute;
+          right: 2rem;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
@@ -260,16 +270,15 @@
           gap: 4px;
 
           .action-counter {
-            color: var(--color-text);
+            color: var(--color-interaction);
             font-weight: 500;
-            margin-left: 4px;
           }
 
           &::before {
             align-items: center;
             content: "·";
             font-weight: 500;
-            line-height: 18px;
+            line-height: 22px;
           }
         }
       }

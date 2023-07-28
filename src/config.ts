@@ -18,6 +18,7 @@ export type InteractionsPreference =
   | "normal"
   | "normal no-replies"
   | "feed"
+  | "feed no-date"
   | "hidden";
 
 export interface Options {
