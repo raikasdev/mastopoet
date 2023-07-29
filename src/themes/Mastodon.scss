@@ -191,7 +191,6 @@
 
     // Notice! Image attachments are not inside content.
     .gallery-holder {
-      padding-left: calc($avatar-size + $message-gap);
       .image-gallery {
         border: 1px solid var(--color-border);
         border-radius: 16px;

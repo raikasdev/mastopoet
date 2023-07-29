@@ -72,6 +72,7 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [x] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 - [x] Detect CORS failed images and show user info box
+- [ ] If toot div is not an full integer, weird bars show in image.
 
 ## Credits
 

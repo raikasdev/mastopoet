@@ -1,4 +1,4 @@
-import { Ref, forwardRef, useMemo, useRef } from "react";
+import { Ref, forwardRef, useEffect, useMemo, useRef } from "react";
 import PostItem, { Post, PostItemProps } from "./PostItem";
 import { Options, maxHeight, maxWidth } from "../config";
 import HorizontalHandlerbar from "./HorizontalHandlebar";
@@ -29,6 +29,8 @@ export default function PostContainer({
   onImageLoadError,
 }: PostContainerProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const sizeRef = useRef<HTMLDivElement>(null);
+
   const PostItemReffed = useMemo(
     () =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,6 +39,13 @@ export default function PostContainer({
       )),
     [post],
   );
+
+  useMemo(() => {
+    if (!sizeRef.current) return;
+    sizeRef.current.style.height = rendering
+      ? `${Math.ceil(sizeRef.current.clientHeight)}px`
+      : "";
+  }, [rendering]);
 
   return (
     <div className="flex-center">
@@ -55,6 +64,7 @@ export default function PostContainer({
               : window.innerWidth / (608 + width)
           })`,
         }}
+        ref={sizeRef}
       >
         <div
           className={`theme-${options.theme} gradient-box ${
