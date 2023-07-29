@@ -62,10 +62,10 @@ function App() {
           .join(""); // DDMMYYYY
         try {
           downloadURI(
-            canvas.toDataURL("image/png", 1.0),
+            canvas.toDataURL("image/jpeg", 1.0),
             `mastopoet-${
               post?.plainUsername || "unknown-user"
-            }-${timeStamp}.png`,
+            }-${timeStamp}.jpg`,
           );
         } catch (e) {
           setMessage("Saving failed due to CORS issues.");
@@ -144,7 +144,7 @@ function App() {
         {post && (
           <>
             <button className="render-button" onClick={exportImage}>
-              Download .png
+              Download .jpg
             </button>
             <button className="render-button" onClick={() => copyAltText(post)}>
               Copy ALT text
