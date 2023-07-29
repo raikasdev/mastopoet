@@ -1,2 +1,5 @@
 /// <reference types="vite/client" />
-declare module "react-best-gradient-color-picker";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let __APP_VERSION__: string;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let __COMMIT_HASH__: string;

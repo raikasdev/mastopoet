@@ -54,7 +54,7 @@ export async function mastodonStatusToPost(
     try {
       const res = await axios.get(webFingerURL.toString(), {
         headers: {
-          "User-Agent": "mastopoet/1.0.0",
+          "User-Agent": `mastopoet/${__APP_VERSION__}`,
         },
       });
 
@@ -146,7 +146,7 @@ export async function submitUrl(url: string) {
     );
     const res = await axios.get(targetUrl.toString(), {
       headers: {
-        "User-Agent": "mastopoet/1.0.0",
+        "User-Agent": `mastopoet/${__APP_VERSION__}`,
       },
     });
 

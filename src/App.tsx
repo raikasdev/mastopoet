@@ -101,13 +101,11 @@ function App() {
       <div className="center-text">
         <h1>Mastopoet</h1>
         <p>
-          The Mastodon post screenshot tool, running release v1.0.0 (
+          The Mastodon post screenshot tool, running v{__APP_VERSION__} (
           <a
             href="https://github.com/raikasdev/mastopoet"
             className="commit-link"
           >
-            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-            {/** @ts-ignore */}
             {__COMMIT_HASH__}
           </a>
           )
