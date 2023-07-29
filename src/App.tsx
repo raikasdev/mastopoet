@@ -140,7 +140,10 @@ function App() {
           width={width}
         />
       )}
-      <div className="flex-center button-grid" style={{ marginBottom: "2rem" }}>
+      <div
+        className="flex-center button-grid"
+        style={{ marginBottom: "0.5rem" }}
+      >
         {post && (
           <>
             <button className="render-button" onClick={exportImage}>

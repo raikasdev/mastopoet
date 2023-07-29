@@ -1,9 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import stylelint from "vite-plugin-stylelint";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { execSync } from "child_process"; // A node library, safe to ignore
+import { execSync } from "child_process";
 
 const commitHash = execSync("git rev-parse --short HEAD").toString().trim();
 

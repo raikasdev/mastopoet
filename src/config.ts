@@ -38,6 +38,9 @@ export const welcomePost: Post = {
   comments: 0,
   favourites: 0,
   date: new Date(1690503611282),
-  content:
-    '<p>Hello and welcome to <a href="https://mementomori.social/tags/Mastopoet" class="mention hashtag" rel="tag">#<span>Mastopoet</span></a> !<br />Paste a Mastodon post URL in the field above and play with the options to create perfect screenshots!</p><p>Source code (licensed under MIT) -&gt; <a href="https://github.com/raikasdev/mastopoet" target="_blank" rel="nofollow noopener noreferrer" translate="no"><span class="invisible">https://</span><span class="">github.com/raikasdev/mastopoet</span><span class="invisible"></span></a><br />Reach out to me -&gt; <a href="https://mementomori.social/@raikas" target="_blank" rel="nofollow noopener noreferrer" translate="no"><span class="invisible">https://</span><span class="">mementomori.social/@raikas</span><span class="invisible"></span></a></p>',
+  content: `<p>Hello and welcome to <a href="https://mementomori.social/tags/Mastopoet" class="mention hashtag" rel="tag">#<span>Mastopoet</span></a> !<br />Paste a Mastodon post URL in the field above and play with the options to create perfect screenshots!</p><p>Source code (licensed under MIT) -&gt; <a href="https://github.com/raikasdev/mastopoet" target="_blank" rel="nofollow noopener noreferrer" translate="no"><span class="invisible">https://</span><span class="">github.com/raikasdev/mastopoet</span><span class="invisible"></span></a><br />Reach out to me -&gt; <a href="https://mementomori.social/@raikas" target="_blank" rel="nofollow noopener noreferrer" translate="no"><span class="invisible">https://</span><span class="">mementomori.social/@raikas</span><span class="invisible"></span></a>${
+    import.meta.env.VITE_HIDE_DEVELOPER_KOFI_AD === "true"
+      ? ""
+      : '<br /><br />If you enjoy Mastopoet, consider buying me a coffee ☕<br />at <a href="https://ko-fi.com/raikasdev" target="_blank" rel="nofollow noopener noreferrer" translate="no"><span class="invisible">https://</span><span class="">ko-fi.com/raikasdev</span></a>, I would really appreciate it ❤️!</p>'
+  }`,
 };

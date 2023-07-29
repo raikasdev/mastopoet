@@ -19,6 +19,7 @@
     "@ronilaukkarinen/stylelint-a11y": "^1.2.7",
     "@ronilaukkarinen/stylelint-declaration-strict-value": "^1.9.2",
     "@ronilaukkarinen/stylelint-value-no-unknown-custom-properties": "^4.0.1",
+    "@types/node": "^20.4.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

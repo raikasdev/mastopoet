@@ -36,6 +36,10 @@ You can use Docker (instructions below), or simply host the website on a static 
 
 First, install dependencies with `npm install` and then build the app with `npm run build`. Simple as that! The application is in the `dist` directory.
 
+### Ko-fi advert
+
+By default, the default post shows a link to my Ko-fi profile. If you want to disable it, you can customize the defaultPost in `src/config.ts`, or set environment value `VITE_HIDE_DEVELOPER_KOFI_AD` to false. I appreciate if you decide to keep it.
+
 ## Building with docker
 
 You can use docker for deploying a production ready instance of Mastopoet.
