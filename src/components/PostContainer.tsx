@@ -1,4 +1,4 @@
-import { Ref, forwardRef, useEffect, useMemo, useRef } from "react";
+import { Ref, forwardRef, useMemo, useRef } from "react";
 import PostItem, { Post, PostItemProps } from "./PostItem";
 import { Options, maxHeight, maxWidth } from "../config";
 import HorizontalHandlerbar from "./HorizontalHandlebar";
