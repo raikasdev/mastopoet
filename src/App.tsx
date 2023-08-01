@@ -15,6 +15,7 @@ import {
 import SearchForm from "./components/SearchForm";
 import { useObjectState } from "./utils/use-object-state";
 import OptionsEditor from "./components/OptionsEditor";
+import testParseUrl from "./instance/_main";
 
 // Main styles
 import "./styles/App.scss";
@@ -116,6 +117,7 @@ function App() {
 
       <SearchForm
         submitUrl={async (url) => {
+          await testParseUrl(url);
           setMessage("");
           try {
             const response = await submitUrl(url);
