@@ -26,7 +26,7 @@ export interface PostItemProps {
   post: Post;
   refInstance?: ForwardedRef<HTMLDivElement>;
   interactionsPref: InteractionsPreference;
-  onImageLoadError: () => void;
+  onImageLoadError: (host: string) => void;
   options: Options;
 }
 
@@ -57,7 +57,9 @@ export default function PostItem({
             src={avatarUrl}
             alt={displayName}
             crossOrigin="anonymous"
-            onError={onImageLoadError}
+            onError={() => {
+              onImageLoadError(new URL(avatarUrl).host);
+            }}
           />
         </div>
         <span className="display-name">
@@ -95,7 +97,9 @@ export default function PostItem({
                     className="attachment"
                     style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
                     crossOrigin="anonymous"
-                    onError={onImageLoadError}
+                    onError={() => {
+                      onImageLoadError(new URL(attachment.url).host);
+                    }}
                   />
                 );
               if (attachment.type === "gifv")
@@ -109,7 +113,9 @@ export default function PostItem({
                     playsInline
                     controls={false}
                     crossOrigin="anonymous"
-                    onError={onImageLoadError}
+                    onError={() => {
+                      onImageLoadError(new URL(avatarUrl).host);
+                    }}
                   />
                 );
               return <div key={attachment.url}></div>;

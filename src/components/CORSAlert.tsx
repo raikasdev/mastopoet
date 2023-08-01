@@ -1,4 +1,4 @@
-export default function CORSAlert() {
+export default function CORSAlert({ host }: { host: string }) {
   return (
     <div className="flex-center">
       <div className="alert">
@@ -26,11 +26,12 @@ export default function CORSAlert() {
         </span>
         <p>
           Sorry! Mastopoet could not fetch images in this Mastodon post due to
-          CORS restrictions. Please contact your instance's admin and ask them
-          to enable anonymous cross origin on their server. You can link them
-          the documentation in our{" "}
+          CORS restrictions. The server you are trying to fetch this post's
+          images is <b>{host}</b>. Please contact that instance's admin and ask
+          them to enable anonymous cross origin on their server. You can read
+          more about this in our{" "}
           <a href="https://github.com/raikasdev/mastopoet#user-content-imagesprofile-pictures-not-working">
-            GitHub README
+            documentation
           </a>
           .
         </p>

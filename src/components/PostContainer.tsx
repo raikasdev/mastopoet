@@ -14,7 +14,7 @@ interface PostContainerProps {
   rendering: boolean;
   screenshotRef: Ref<HTMLDivElement>;
   options: Options;
-  onImageLoadError: () => void;
+  onImageLoadError: (host: string) => void;
 }
 
 export default function PostContainer({

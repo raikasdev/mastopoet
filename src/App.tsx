@@ -37,7 +37,7 @@ function App() {
   const [width, setWidth] = useMinmaxState(defaultWidth, 0, maxWidth);
   const [height, setHeight] = useMinmaxState(defaultHeight, 0, maxHeight);
 
-  const [corsAlertOpen, setCorsAlertOpen] = useState(false);
+  const [corsHost, setCorsHost] = useState("");
 
   /** Screenshotting */
   const screenshotRef = useRef<HTMLDivElement>(null);
@@ -86,7 +86,7 @@ function App() {
           setPost(response);
           setHeight(defaultHeight);
           setWidth(defaultWidth);
-          setCorsAlertOpen(false);
+          setCorsHost("");
         } catch (e) {
           setMessage("Query URL is not a valid post");
         }
@@ -112,7 +112,7 @@ function App() {
         </p>
         <p>{message}</p>
       </div>
-      {corsAlertOpen && <CORSAlert />}
+      {corsHost !== "" && <CORSAlert host={corsHost} />}
 
       <SearchForm
         submitUrl={async (url) => {
@@ -122,7 +122,7 @@ function App() {
             setPost(response);
             setHeight(defaultHeight);
             setWidth(defaultWidth);
-            setCorsAlertOpen(false);
+            setCorsHost("");
           } catch (e) {
             if (e instanceof Error) {
               return setMessage(e.message);
@@ -163,7 +163,7 @@ function App() {
           rendering={rendering}
           screenshotRef={screenshotRef}
           options={options}
-          onImageLoadError={() => setCorsAlertOpen(true)}
+          onImageLoadError={(host) => setCorsHost(host)}
         />
       )}
     </>

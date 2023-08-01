@@ -24,9 +24,16 @@ Add ?url=<post url> to the end of the Mastopoet URL to generate links that immed
 
 ## Images/profile pictures not working?
 
-This is due to CORS. I cannot do anything about it, as the whole process is done client-side.
+This is due to CORS. It's a security feature of browsers, when assets (like profile pictures) are accessed from other websites. I cannot do anything about it, as the whole process is done client-side.
 
-If you want to get Mastopoet working on your instance, contact your admin and ask them to allow anonymous CORS (crossOrigin: "anonymous") requests for their Mastodon media server.
+The images are (almost) always fetched from the instance that your link is from. So, if your link is https://instance1.social/@user@instace2.social/0000000000, the data is fetched from instance1.social, even if the post is posted originally on instance2.social.
+
+If you want to get Mastopoet working, contact that instances admin and ask them to allow anonymous CORS (crossOrigin: "anonymous") requests for their Mastodon media server.
+
+OR: You can try using an other instance and find the post. Here's a few working instances:
+
+- [mstdn.social](https://mstdn.social)
+- [mementomori.social](https://mementomori.social)
 
 **For admins** this means they need to add the `Access-Control-Allow-Origin` header to the server providing your users with images hosted on Mastodon. You can set it to '\*', or allow just Mastopoet with 'https://mastopoet.ohjelmoi.fi'. There's more technical information on [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image).
 
