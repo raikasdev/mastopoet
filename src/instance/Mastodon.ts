@@ -1,9 +1,116 @@
-import { Post } from "../components/PostItem";
+import axios, { AxiosError } from "axios";
+import { Attachment, Post } from "../components/PostItem";
+import { truncateString } from "../utils/util";
 import BaseInstance from "./BaseInstance";
 
 export default class MastodonInstance extends BaseInstance {
-  public async execute(): Promise<any> {
-    console.log("Hello world! [Mastodon]");
-    return "";
+  public async execute(): Promise<Post> {
+    if (this.url.protocol !== "https:")
+      throw new Error("Protocol must be HTTPS");
+
+    try {
+      const targetUrl = new URL(
+        `https://${this.url.host}/api/v1/statuses/${this.postId}`,
+      );
+      const res = await axios.get(targetUrl.toString(), {
+        headers: {
+          "User-Agent": `mastopoet/${__APP_VERSION__}`,
+        },
+      });
+
+      return await this.mastodonStatusToPost(res.data, this.url.host);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        if (!e.response) throw new Error("Failed to reach API");
+        if (e.response.status === 404)
+          throw new Error("Post not found. Is it private?");
+      }
+      throw new Error("Unknown error trying to reach Mastodon instance");
+    }
+  }
+
+  private async mastodonStatusToPost(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    obj: any,
+    host: string,
+  ): Promise<Post> {
+    let username = obj.account.acct;
+    if (!username.includes("@")) {
+      console.debug("Local toot, looking up username from WebFinger...");
+      // A local username, time for WebFinger lookup...
+      const webFingerURL = new URL(`https://${host}/.well-known/webfinger`);
+      webFingerURL.searchParams.set("resource", `acct:${username}@${host}`);
+      try {
+        const res = await axios.get(webFingerURL.toString(), {
+          headers: {
+            "User-Agent": `mastopoet/${__APP_VERSION__}`,
+          },
+        });
+
+        const subject = res.data.subject;
+
+        username = new URL(subject).pathname;
+      } catch (e) {
+        // If WebFinger lookup fails, just resort to lazy domain
+        username = `${username}@${host}`;
+      }
+    }
+
+    username = `@${username}`;
+
+    // Emoji replacer (quality code 100%)
+    let content = obj.content;
+
+    obj.emojis.forEach((emoji: { url: string; shortcode: string }) => {
+      content = content.replaceAll(
+        `:${emoji.shortcode}:`,
+        `<img class="emoji" src="${emoji.url}" />`,
+      );
+    });
+
+    // Parse attachment
+    const attachments = obj.media_attachments.map(
+      (mediaAttachment: {
+        type: string;
+        url: string;
+        meta: { original: { aspect: number } };
+        description?: string;
+      }): Attachment => {
+        console.log(mediaAttachment);
+        return {
+          type: mediaAttachment.type,
+          url: mediaAttachment.url,
+          aspectRatio: mediaAttachment.meta.original.aspect,
+          description: mediaAttachment.description,
+        };
+      },
+    );
+
+    let displayName = truncateString(
+      obj.account.display_name === ""
+        ? obj.account.username
+        : obj.account.display_name,
+      30,
+    );
+
+    obj.account.emojis.forEach((emoji: { url: string; shortcode: string }) => {
+      displayName = displayName.replaceAll(
+        `:${emoji.shortcode}:`,
+        `<img class="emoji" src="${emoji.url}" />`,
+      );
+    });
+
+    return {
+      username,
+      plainUsername: obj.account.username,
+      displayName,
+      avatarUrl: obj.account.avatar,
+      boosts: obj.reblogs_count,
+      comments: obj.replies_count,
+      favourites: obj.favourites_count,
+      content,
+      attachments,
+      date: new Date(obj.created_at),
+    };
   }
 }
