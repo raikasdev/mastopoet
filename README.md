@@ -75,11 +75,12 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [x] Read toot URL from query
 - [x] Default toot with information
 - [x] Fix multi image image galleries
-- [ ] Support for non-Mastodon links
+- [x] Support for non-Mastodon links
 - [x] Alt text generator
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 - [x] Detect CORS failed images and show user info box
 - [x] If toot div is not an full integer, weird bars show in image.
+- [ ] Add support for Misskey/Firefish (src/instance/Misskey.ts)
 
 ## Credits
 
