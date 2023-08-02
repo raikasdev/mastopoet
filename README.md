@@ -1,4 +1,4 @@
-![Mastopoet Banner, AI generated, by @rolle@mementomori.social](https://raw.githubusercontent.com/raikasdev/mastopoet/main/public/mastopoet.png)
+![Mastopoet Banner, AI generated, by @rolle@mementomori.social](https://raw.githubusercontent.com/raikasdev/mastopoet/main/public/mastopoet.jpg)
 
 # Mastopoet
 
