@@ -6,6 +6,9 @@ const POST_REGEXES = [
   /^\/users\/\w+(?:@[\w-.]+)?\/statuses\/(\d+)$/, // instance.social/users/user/statuses/postid
 ];
 
+/**
+ * @deprecated Replacing with multi-instance support 
+ */
 export function parseUrl(inputURL: string) {
   try {
     const url = new URL(inputURL);
@@ -29,6 +32,9 @@ export function parseUrl(inputURL: string) {
   }
 }
 
+/**
+ * @deprecated Replacing with multi-instance support 
+ */
 export const getPostApiPath = (id: string) => `/api/v1/statuses/${id}`;
 
 export const truncateString = (str: string, num: number) => {
@@ -40,6 +46,9 @@ export const truncateString = (str: string, num: number) => {
   }
 };
 
+/**
+ * @deprecated Replacing with multi-instance support 
+ */
 export async function mastodonStatusToPost(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   obj: any,
@@ -134,6 +143,9 @@ export function downloadURI(uri: string, name: string) {
   document.body.removeChild(link);
 }
 
+/**
+ * @deprecated Replacing with multi-instance support 
+ */
 export async function submitUrl(url: string) {
   const urlParsed = parseUrl(url);
   if (!urlParsed) throw new Error("Invalid Mastodon post URL");
