@@ -7,7 +7,7 @@ export default class BaseInstance {
     throw new Error("Not implemented");
   }
 
-  constructor (url: URL, postId: string) {
+  constructor(url: URL, postId: string) {
     this.url = url;
     this.postId = postId;
   }
