@@ -69,7 +69,7 @@ export default function PostItem({
           <span className="username">{username}</span>
           {/** Replace with :has when Firefox starts supporting it */}
           {options.interactions === "feed" && (
-            <span className="datetime">Jul 28, 2023, 17:11</span>
+            <span className="datetime">{formatDate(date)}</span>
           )}
         </span>
       </div>
