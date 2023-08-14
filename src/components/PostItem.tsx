@@ -1,6 +1,7 @@
 import { ForwardedRef } from "react";
 import { formatDate } from "../utils/util";
 import { InteractionsPreference, Options } from "../config";
+import DOMPurify from "dompurify";
 
 export interface Post {
   displayName: string;
@@ -64,7 +65,11 @@ export default function PostItem({
         </div>
         <span className="display-name">
           <bdi>
-            <strong dangerouslySetInnerHTML={{ __html: displayName }}></strong>
+            <strong
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(displayName),
+              }}
+            ></strong>
           </bdi>
           <span className="username">{username}</span>
           {/** Replace with :has when Firefox starts supporting it */}
@@ -76,7 +81,7 @@ export default function PostItem({
       <div
         className="content"
         id="content"
-        dangerouslySetInnerHTML={{ __html: content }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
       />
       {attachments.length !== 0 && (
         <div className="gallery-holder">
