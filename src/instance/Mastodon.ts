@@ -1,7 +1,8 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { Attachment, Post } from "../components/PostItem";
 import { truncateString } from "../utils/util";
 import BaseInstance from "./BaseInstance";
+import { axiosInstance } from "../utils/axios";
 
 export default class MastodonInstance extends BaseInstance {
   public async execute(): Promise<Post> {
@@ -12,11 +13,7 @@ export default class MastodonInstance extends BaseInstance {
       const targetUrl = new URL(
         `https://${this.url.host}/api/v1/statuses/${this.postId}`,
       );
-      const res = await axios.get(targetUrl.toString(), {
-        headers: {
-          "User-Agent": `mastopoet/${__APP_VERSION__}`,
-        },
-      });
+      const res = await axiosInstance.get(targetUrl.toString());
 
       return await this.mastodonStatusToPost(res.data, this.url.host);
     } catch (e) {
@@ -41,11 +38,7 @@ export default class MastodonInstance extends BaseInstance {
       const webFingerURL = new URL(`https://${host}/.well-known/webfinger`);
       webFingerURL.searchParams.set("resource", `acct:${username}@${host}`);
       try {
-        const res = await axios.get(webFingerURL.toString(), {
-          headers: {
-            "User-Agent": `mastopoet/${__APP_VERSION__}`,
-          },
-        });
+        const res = await axiosInstance(webFingerURL.toString());
 
         const subject = res.data.subject;
 

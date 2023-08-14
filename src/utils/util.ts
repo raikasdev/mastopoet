@@ -1,13 +1,14 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { Attachment, Post } from "../components/PostItem";
+import { axiosInstance } from "./axios";
 
 const POST_REGEXES = [
-  /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/, // instace.social/@user/postid
+  /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/, // instance.social/@user/postid
   /^\/users\/\w+(?:@[\w-.]+)?\/statuses\/(\d+)$/, // instance.social/users/user/statuses/postid
 ];
 
 /**
- * @deprecated Replacing with multi-instance support 
+ * @deprecated Replacing with multi-instance support
  */
 export function parseUrl(inputURL: string) {
   try {
@@ -33,7 +34,7 @@ export function parseUrl(inputURL: string) {
 }
 
 /**
- * @deprecated Replacing with multi-instance support 
+ * @deprecated Replacing with multi-instance support
  */
 export const getPostApiPath = (id: string) => `/api/v1/statuses/${id}`;
 
@@ -47,7 +48,7 @@ export const truncateString = (str: string, num: number) => {
 };
 
 /**
- * @deprecated Replacing with multi-instance support 
+ * @deprecated Replacing with multi-instance support
  */
 export async function mastodonStatusToPost(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,11 +62,7 @@ export async function mastodonStatusToPost(
     const webFingerURL = new URL(`https://${host}/.well-known/webfinger`);
     webFingerURL.searchParams.set("resource", `acct:${username}@${host}`);
     try {
-      const res = await axios.get(webFingerURL.toString(), {
-        headers: {
-          "User-Agent": `mastopoet/${__APP_VERSION__}`,
-        },
-      });
+      const res = await axiosInstance.get(webFingerURL.toString());
 
       const subject = res.data.subject;
 
@@ -144,7 +141,7 @@ export function downloadURI(uri: string, name: string) {
 }
 
 /**
- * @deprecated Replacing with multi-instance support 
+ * @deprecated Replacing with multi-instance support
  */
 export async function submitUrl(url: string) {
   const urlParsed = parseUrl(url);
@@ -156,11 +153,7 @@ export async function submitUrl(url: string) {
     const targetUrl = new URL(
       `https://${urlParsed.host}${getPostApiPath(urlParsed.postId)}`,
     );
-    const res = await axios.get(targetUrl.toString(), {
-      headers: {
-        "User-Agent": `mastopoet/${__APP_VERSION__}`,
-      },
-    });
+    const res = await axiosInstance.get(targetUrl.toString());
 
     return mastodonStatusToPost(res.data, urlParsed.host);
   } catch (e) {
