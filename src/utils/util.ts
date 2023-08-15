@@ -231,6 +231,8 @@ export async function copyAltText(post: Post) {
     });
   }
 
+  const pollText = post.poll ? `\n\nPoll results: ${post.poll.map((i) => `${i.percentage}% ${i.title}`).join(", ")}` : '';
+
   navigator.clipboard.writeText(
     `A screenshot of post by ${post.displayName} (${
       post.username
@@ -240,6 +242,6 @@ export async function copyAltText(post: Post) {
       post.comments
     } replies.\n\n${content}${
       attachmentsText !== "" ? `\n\n${attachmentsText}` : ""
-    }`,
+    }${pollText}`,
   );
 }
