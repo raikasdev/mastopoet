@@ -18,6 +18,8 @@
 .theme-mastodon,
 .theme-mastodon-light,
 .theme-mastodon-white-interactions {
+  --color-poll-winner: #5e64f8;
+
   $font-stack: roboto,
     system-ui,
     -apple-system,
@@ -186,6 +188,37 @@
 
       .hashtag {
         color: var(--color-hashtag);
+      }
+    }
+
+    .poll {
+      font-size: 14px;
+    
+      .poll-option {
+        margin-bottom: 10px;
+
+        .option-title {
+          line-height: 16px;
+          margin: 0;
+          padding: 6px 0;
+          
+          strong {
+            display: inline-block;
+            width: 45px;
+          }
+        }
+
+        .option-bar {
+          background-color: var(--color-text-dim);
+          border-radius: 4px;
+          display: block;
+          height: 5px;
+          min-width: 1%;
+
+          &.winner {
+            background-color: var(--color-poll-winner);
+          }
+        }
       }
     }
 

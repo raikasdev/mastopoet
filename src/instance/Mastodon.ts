@@ -100,6 +100,19 @@ export default class MastodonInstance extends BaseInstance {
       );
     });
 
+    const pollTotal = obj.poll?.options.reduce(
+      (acc: number, option: { votes_count: number }) => acc + option.votes_count,
+      0,
+    ) || 1;
+
+    const poll = obj.poll?.options.map(
+      (option: { title: string; votes_count: number }) => ({
+        title: option.title,
+        votesCount: option.votes_count,
+        percentage: Math.round((option.votes_count / pollTotal) * 100),
+      }),
+    );
+
     return {
       username,
       plainUsername: obj.account.username,
@@ -110,6 +123,7 @@ export default class MastodonInstance extends BaseInstance {
       favourites: obj.favourites_count,
       content,
       attachments,
+      poll,
       date: new Date(obj.created_at),
     };
   }

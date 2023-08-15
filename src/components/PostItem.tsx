@@ -13,6 +13,11 @@ export interface Post {
   comments: number;
   attachments: Attachment[];
   date: Date;
+  poll?: {
+    title: string;
+    votesCount: number;
+    percentage: number;
+  }[];
 }
 
 export interface Attachment {
@@ -121,6 +126,27 @@ export default function PostItem({
               return <div key={attachment.url}></div>;
             })}
           </div>
+        </div>
+      )}
+      {post.poll && (
+        <div className="poll">
+          {post.poll.map((option) => (
+            <div className="poll-option">
+              <p className="option-title">
+                <strong>{option.percentage}%</strong> {option.title}
+              </p>
+              <div
+                className={`option-bar ${
+                  post.poll
+                    ?.map((i) => i.votesCount)
+                    .sort((a, b) => b - a)[0] === option.votesCount
+                    ? "winner"
+                    : ""
+                }`}
+                style={{ width: `${option.percentage}% ` }}
+              />
+            </div>
+          ))}
         </div>
       )}
       <div className={`action-bar action-bar-${interactionsPref}`}>
