@@ -11,7 +11,8 @@ It allows you to create ✨ stunning ✨ screenshots of your posts, with ability
 
 ## Demo
 
-[mastopoet.raikas.dev](https://mastopoet.raikas.dev)
+- [mastopoet.raikas.dev](https://mastopoet.raikas.dev)
+- [poet.bolha.us](https://poet.bolha.us)
 
 ## URL Query feature
 
@@ -34,6 +35,7 @@ OR: You can try using an other instance and find the post. Here's a few working 
 
 - [mstdn.social](https://mstdn.social)
 - [mementomori.social](https://mementomori.social)
+- [bolha.us](https://bolha.us)
 
 **For admins** this means they need to add the `Access-Control-Allow-Origin` header to the server providing your users with images hosted on Mastodon. You can set it to '\*', or allow just Mastopoet with 'https://mastopoet.raikas.dev'. There's more technical information on [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image).
 
