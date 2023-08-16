@@ -11,7 +11,7 @@ It allows you to create ✨ stunning ✨ screenshots of your posts, with ability
 
 ## Demo
 
-- [mastopoet.raikas.dev](https://mastopoet.raikas.dev)
+- [mastopoet.raikas.dev](https://mastopoet.raikas.dev) (developer's instance, always on latest commit)
 - [poet.bolha.us](https://poet.bolha.us)
 
 ## URL Query feature
