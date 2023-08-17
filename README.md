@@ -4,6 +4,10 @@
 
 The post screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
 
+**If you like Mastopoet, consider supporting the developer:**
+
+[![Buy me a coffee!](https://img.shields.io/badge/Buy_me_a_coffee!-F16061.svg?logo=ko-fi&logoColor=white&style=for-the-badge)](https://ko-fi.com/raikasdev)
+
 ## What?
 
 Mastopoet is an open source screenshot tool for [Mastodon](https://joinmastodon.org), inspired by [poet.so](https://poet.so).
