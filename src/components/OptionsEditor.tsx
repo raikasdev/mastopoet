@@ -67,25 +67,46 @@ export default function OptionsEditor({
           </select>
         </div>
       </div>
-      <div className="option">
-        <label htmlFor="interactions-select">Interactions appearance</label>
-        <select
-          name="interactions-select"
-          id="interactions-select"
-          value={options.interactions}
-          onChange={(event) =>
-            setOptions({
-              ...options,
-              interactions: event.currentTarget.value as InteractionsPreference,
-            })
-          }
-        >
-          <option value="feed">Feed (icons)</option>
-          <option value="feed no-date">Feed (icons, no date)</option>
-          <option value="normal">Normal (text)</option>
-          <option value="normal no-replies">Normal (text, no replies)</option>
-          <option value="hidden">Hidden</option>
-        </select>
+      <div className="option-stack">
+        <div className="option">
+          <label htmlFor="interactions-select">Interactions appearance</label>
+          <select
+            name="interactions-select"
+            id="interactions-select"
+            value={options.interactions}
+            onChange={(event) =>
+              setOptions({
+                ...options,
+                interactions: event.currentTarget
+                  .value as InteractionsPreference,
+              })
+            }
+          >
+            <option value="feed">Feed (icons)</option>
+            <option value="feed no-date">Feed (icons, no date)</option>
+            <option value="normal">Normal (text)</option>
+            <option value="normal no-replies">Normal (text, no replies)</option>
+            <option value="hidden">Hidden</option>
+          </select>
+        </div>
+        <div className="option">
+          <label htmlFor="language-select">ALT text language</label>
+          <select
+            name="language-select"
+            id="language-select"
+            value={options.language}
+            onChange={(event) =>
+              setOptions({
+                ...options,
+                language: event.currentTarget.value,
+              })
+            }
+          >
+            <option value="en">🇬🇧 English</option>
+            <option value="fi">🇫🇮 Suomi</option>
+            <option value="de">🇩🇪 Deutsch</option>
+          </select>
+        </div>
       </div>
       <div className="option">
         <label htmlFor="color-grid">Background</label>

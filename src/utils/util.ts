@@ -1,6 +1,8 @@
 import { AxiosError } from "axios";
 import { Attachment, Post } from "../components/PostItem";
 import { axiosInstance } from "./axios";
+import lang, { LangItem } from "../lang";
+import { Options } from "../config";
 
 const POST_REGEXES = [
   /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/, // instance.social/@user/postid
@@ -192,7 +194,7 @@ export function formatDate(date: Date) {
   return `${month} ${day}, ${year}, ${hours}:${minutes}`;
 }
 
-export async function copyAltText(post: Post) {
+export async function copyAltText(post: Post, options: Options) {
   try {
     const permRes = await navigator.permissions.query({
       name: "clipboard-write",
@@ -208,40 +210,40 @@ export async function copyAltText(post: Post) {
     }
   }
 
+  const language = lang[options.language] as LangItem || lang.en;
+
   const content =
     document.getElementById("content")?.innerText ||
-    "Failed to fetch post content from Mastopoet";
+    language.fetchError;
 
   let attachmentsText = "";
   if (post.attachments.length === 1) {
     const altText = post.attachments[0].description;
-    attachmentsText = `Post has one attachment. ${
+    attachmentsText = `${language.attachments.single.attachments} ${
       altText
-        ? `The attachments alt text is:\n${altText}`
-        : "It does not have an alt text set."
+        ? language.attachments.single.has.replace('{altText}', altText)
+        : language.attachments.single.hasNot
     }`;
   } else if (post.attachments.length > 1) {
-    attachmentsText = `Post has ${post.attachments.length} attachments.`;
+    attachmentsText = language.attachments.multiple.attachments.replace('{count}', `${post.attachments.length}`);
     post.attachments.forEach((attachment, index) => {
-      attachmentsText += `\nAttachment ${index + 1}${
+      attachmentsText += 
         attachment.description
-          ? `'s alt text is: ${attachment.description}`
-          : " does not have an alt text."
-      }`;
+          ? language.attachments.multiple.has.replace('{index}', `${index + 1}`).replace('{altText}', attachment.description)
+          : language.attachments.multiple.hasNot.replace('{index}', `${index + 1}`)
     });
   }
 
-  const pollText = post.poll ? `\n\nPoll results: ${post.poll.map((i) => `${i.percentage}% ${i.title}`).join(", ")}` : '';
+  const pollText = post.poll ? `${language.poll.intro} ${post.poll.map((i) => language.poll.item.replace('{percentage}', `${i.percentage}`).replace('{title}', i.title)).join(", ")}` : '';
+  const intro = language.intro
+    .replace('{displayName}', post.displayName)
+    .replace('{username}', post.username)
+    .replace('{date}', formatDate(post.date))
+    .replace('{favourites}', `${post.favourites}`)
+    .replace('{boosts}', `${post.boosts}`)
+    .replace('{replies}', `${post.comments}`);
 
   navigator.clipboard.writeText(
-    `A screenshot of post by ${post.displayName} (${
-      post.username
-    }) beautified by Mastopoet tool. It was posted on ${formatDate(
-      post.date,
-    )} and has ${post.favourites} favourites, ${post.boosts} boosts and ${
-      post.comments
-    } replies.\n\n${content}${
-      attachmentsText !== "" ? `\n\n${attachmentsText}` : ""
-    }${pollText}`,
+    [intro, attachmentsText, pollText, content].filter((i) => i !== "").join("\n\n"),
   );
 }
