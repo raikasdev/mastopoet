@@ -149,6 +149,35 @@
       }
     }
 
+    .poll {
+      font-size: 14px;
+      padding-left: calc($avatar-size + $message-gap);
+
+    
+      .poll-option {
+        margin-bottom: 10px;
+
+        .option-title {
+          line-height: 16px;
+          margin: 0;
+          padding: 6px 0;
+          
+          strong {
+            display: inline-block;
+            width: 45px;
+          }
+        }
+
+        .option-bar {
+          background-color: var(--color-text-dim);
+          border-radius: 4px;
+          display: block;
+          height: 5px;
+          min-width: 1%;
+        }
+      }
+    }
+
     // Notice! Image attachments are not inside content.
     .gallery-holder {
       padding-left: calc($avatar-size + $message-gap);
@@ -183,6 +212,7 @@
         // -> 133.6, remove 50px (each buttons width)
         // -> 83.6px
         gap: 83.6px;
+        margin-top: 24px;
 
         .action-bar-datetime {
           display: none;

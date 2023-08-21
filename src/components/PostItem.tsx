@@ -1,6 +1,7 @@
 import { ForwardedRef } from "react";
 import { formatDate } from "../utils/util";
 import { InteractionsPreference, Options } from "../config";
+import DOMPurify from "dompurify";
 
 export interface Post {
   displayName: string;
@@ -13,6 +14,11 @@ export interface Post {
   comments: number;
   attachments: Attachment[];
   date: Date;
+  poll?: {
+    title: string;
+    votesCount: number;
+    percentage: number;
+  }[];
 }
 
 export interface Attachment {
@@ -64,19 +70,23 @@ export default function PostItem({
         </div>
         <span className="display-name">
           <bdi>
-            <strong dangerouslySetInnerHTML={{ __html: displayName }}></strong>
+            <strong
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(displayName),
+              }}
+            ></strong>
           </bdi>
           <span className="username">{username}</span>
           {/** Replace with :has when Firefox starts supporting it */}
           {options.interactions === "feed" && (
-            <span className="datetime">Jul 28, 2023, 17:11</span>
+            <span className="datetime">{formatDate(date)}</span>
           )}
         </span>
       </div>
       <div
         className="content"
         id="content"
-        dangerouslySetInnerHTML={{ __html: content }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
       />
       {attachments.length !== 0 && (
         <div className="gallery-holder">
@@ -121,6 +131,27 @@ export default function PostItem({
               return <div key={attachment.url}></div>;
             })}
           </div>
+        </div>
+      )}
+      {post.poll && (
+        <div className="poll">
+          {post.poll.map((option) => (
+            <div className="poll-option">
+              <p className="option-title">
+                <strong>{option.percentage}%</strong> {option.title}
+              </p>
+              <div
+                className={`option-bar ${
+                  post.poll
+                    ?.map((i) => i.votesCount)
+                    .sort((a, b) => b - a)[0] === option.votesCount
+                    ? "winner"
+                    : ""
+                }`}
+                style={{ width: `${option.percentage}% ` }}
+              />
+            </div>
+          ))}
         </div>
       )}
       <div className={`action-bar action-bar-${interactionsPref}`}>

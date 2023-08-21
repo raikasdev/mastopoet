@@ -29,16 +29,26 @@ function App() {
   const [message, setMessage] = useState("");
   const [post, setPost] = useState<Post | null>(welcomePost);
   const [rendering, setRendering] = useState(false);
-  const [options, setOptions] = useObjectState<Options>({
-    theme: "bird-ui",
-    interactions: "feed",
-    background: "linear-gradient(to right, #fc5c7d, #6a82fb)",
-    scale: 2,
-  });
+  const [options, setOptions] = useObjectState<Options>(
+    localStorage.getItem("options")
+      ? JSON.parse(localStorage.getItem("options") as string)
+      : {
+          theme: "bird-ui",
+          interactions: "feed",
+          background: "linear-gradient(to right, #fc5c7d, #6a82fb)",
+          scale: 2,
+          language: "en",
+        },
+  );
   const [width, setWidth] = useMinmaxState(defaultWidth, 0, maxWidth);
   const [height, setHeight] = useMinmaxState(defaultHeight, 0, maxHeight);
 
   const [corsHost, setCorsHost] = useState("");
+
+  // Saving options to local storage
+  useEffect(() => {
+    localStorage.setItem("options", JSON.stringify(options));
+  }, [options]);
 
   /** Screenshotting */
   const screenshotRef = useRef<HTMLDivElement>(null);
@@ -148,7 +158,10 @@ function App() {
             <button className="render-button" onClick={exportImage}>
               Download .jpg
             </button>
-            <button className="render-button" onClick={() => copyAltText(post)}>
+            <button
+              className="render-button"
+              onClick={() => copyAltText(post, options)}
+            >
               Copy ALT text
             </button>
           </>

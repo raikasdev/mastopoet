@@ -4,6 +4,10 @@
 
 The post screenshot tool for Mastodon. Developed by [@raikas@mementomori.social](https://mementomori.social/@raikas)
 
+**If you like Mastopoet, consider supporting the developer:**
+
+[![Buy me a coffee!](https://img.shields.io/badge/Buy_me_a_coffee!-F16061.svg?logo=ko-fi&logoColor=white&style=for-the-badge)](https://ko-fi.com/raikasdev)
+
 ## What?
 
 Mastopoet is an open source screenshot tool for [Mastodon](https://joinmastodon.org), inspired by [poet.so](https://poet.so).
@@ -11,7 +15,8 @@ It allows you to create ✨ stunning ✨ screenshots of your posts, with ability
 
 ## Demo
 
-[mastopoet.ohjelmoi.fi](https://mastopoet.ohjelmoi.fi)
+- [mastopoet.raikas.dev](https://mastopoet.raikas.dev) (developer's instance, always on latest commit)
+- [poet.bolha.us](https://poet.bolha.us)
 
 ## URL Query feature
 
@@ -34,8 +39,9 @@ OR: You can try using an other instance and find the post. Here's a few working 
 
 - [mstdn.social](https://mstdn.social)
 - [mementomori.social](https://mementomori.social)
+- [bolha.us](https://bolha.us)
 
-**For admins** this means they need to add the `Access-Control-Allow-Origin` header to the server providing your users with images hosted on Mastodon. You can set it to '\*', or allow just Mastopoet with 'https://mastopoet.ohjelmoi.fi'. There's more technical information on [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image).
+**For admins** this means they need to add the `Access-Control-Allow-Origin` header to the server providing your users with images hosted on Mastodon. You can set it to '\*', or allow just Mastopoet with 'https://mastopoet.raikas.dev'. There's more technical information on [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image).
 
 ## Deploying
 
