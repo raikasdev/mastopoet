@@ -162,7 +162,7 @@ export default function PostItem({
         </div>
       )}
       {
-        post.reactions && <div className="action-bar" style={{maxWidth: '3em'}}>
+        post.reactions && <div className="action-bar" style={{flexWrap: 'wrap'}}>
           {
             post.reactions?.map((val, index) => <div key={index} className="emoji-reaction" style={{
               backgroundColor: '#2a2c38', margin: '0.5rem', padding: '0.3rem', display: 'flex', alignItems: 'center', borderRadius: '5px'
