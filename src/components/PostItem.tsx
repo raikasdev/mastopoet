@@ -19,6 +19,13 @@ export interface Post {
     votesCount: number;
     percentage: number;
   }[];
+  reactions?: Reactions[];
+}
+
+export interface Reactions {
+  value?: string;
+  url?: string;
+  count: number;
 }
 
 export interface Attachment {
@@ -154,6 +161,19 @@ export default function PostItem({
           ))}
         </div>
       )}
+      {
+        post.reactions && <div className="action-bar" style={{maxWidth: '3em'}}>
+          {
+            post.reactions?.map((val, index) => <div key={index} className="emoji-reaction" style={{
+              backgroundColor: '#2a2c38', margin: '0.5rem', padding: '0.3rem', display: 'flex', alignItems: 'center', borderRadius: '5px'
+            }}>
+              { val.value && <span>{val.value}</span> }
+              { val.url && <img src={val.url} style={{maxWidth: '20px', objectFit: 'cover'}} /> }
+              <span style={{ marginLeft: '0.45rem' }}>{ val.count }</span>
+            </div>)
+          }
+        </div>
+      }
       <div className={`action-bar action-bar-${interactionsPref}`}>
         <span className="action-bar-datetime">{formatDate(date)}</span>
         <div className="action">
@@ -166,11 +186,13 @@ export default function PostItem({
           <span className="action-counter">{boosts}</span>
           <span className="action-label">Boosts</span>
         </div>
-        <div className="action">
-          <span className="icon-star" />
-          <span className="action-counter">{favourites}</span>
-          <span className="action-label">Favourites</span>
-        </div>
+        {
+          !post.reactions && <div className="action">
+            <span className="icon-star" />
+            <span className="action-counter">{favourites}</span>
+            <span className="action-label">Favourites</span>
+          </div>
+        }
       </div>
     </div>
   );
