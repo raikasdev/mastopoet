@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
-import { Attachment, Post } from "../components/PostItem";
+import { Attachment, Post, Reactions } from "../components/PostItem";
 import BaseInstance from "./BaseInstance";
 import { axiosInstance } from "../utils/axios";
 
 interface MisskeyReaction {
-  [emojiName: string]: string | number;
+  [emojiName: string]: number;
 }
 
 interface MisskeyInstanceInterface {
@@ -132,12 +132,16 @@ export default class MisskeyInstance extends BaseInstance {
       const displayNameEmoji = await this.parseArrayEmoji(!regexDisplayNameEmoji ? [] : regexDisplayNameEmoji);
       const displayName = this.replaceEmoji(displayNameEmoji, dataNote.user.name)
 
+      const reactions = await this.fetchReaction(dataNote.reactions);
+      console.log(reactions);
+
       return {
         username,
         attachments,
         avatarUrl,
         content,
         displayName,
+        reactions,
         plainUsername: dataNote.user.username,
         boosts: dataNote.renoteCount,
         comments: dataNote.repliesCount,
@@ -162,9 +166,37 @@ export default class MisskeyInstance extends BaseInstance {
     let count = 0;
     Object.keys(reaction).forEach(react => {
       if (typeof reaction[react] !== 'number') return;
-      count += reaction[react] as number;
+      count += reaction[react];
     });
     return count;
+  }
+
+  private async getEmojiFromInstance(emoji: string, host: string = this.url.host): Promise<string> {
+    const uri = new URL(`https://${host}/api/emoji`);
+    const emojiFetch = await axiosInstance.post(uri.toString(), { name: emoji });
+    return emojiFetch.data.url as string;
+  }
+
+  private async fetchReaction(reaction: MisskeyReaction): Promise<Reactions[]> {
+    const data: Reactions[] = [];
+
+    await Promise.all(Object.keys(reaction).map(async react => {
+      if (react[0] !== ':' && react[react.length - 1] !== ':') {
+        data.push({ value: react, count: reaction[react] });
+        return;
+      }
+
+      const originalReact = react;
+      react = react.replace('@.:', ':');
+      react = react.substring(1, react.length - 1);
+      const guestDomain = react.match('@') ? react.split('@')[1] : this.url.host;
+      react = guestDomain === this.url.host ? react : react.split('@')[0];
+      const emoji = await this.getEmojiFromInstance(react, guestDomain);
+
+      data.push({ url: emoji, count: reaction[originalReact] });
+    }));
+
+    return data;
   }
 
   private async parseArrayEmoji(setlist: string[]): Promise<TEmojiReplacer> {
@@ -175,9 +207,7 @@ export default class MisskeyInstance extends BaseInstance {
     } = {}
 
     await Promise.all(newSetlist.map(async val => {
-      const uri = new URL(`https://${this.url.host}/api/emoji`);
-      const emoji = await axiosInstance.post(uri.toString(), { name: val });
-      retSetlist[val] = emoji.data.url;
+      retSetlist[val] = await this.getEmojiFromInstance(val);
     }))
 
     return retSetlist;
