@@ -61,7 +61,7 @@ interface MisskeyNotesResponse {
   id: string;
   createdAt: string;
   deletedAt: string;
-  text: string;
+  text?: string;
   cw: string;
   userId: string;
   user: MisskeyUser;
@@ -122,11 +122,14 @@ export default class MisskeyInstance extends BaseInstance {
         }
       });
 
-      const avatarUrl = new URL(dataNote.user.avatarUrl).searchParams.get('url') ?? "";
+      const avatarUrl = dataNote.user.avatarUrl;
 
-      const regexContentEmoji = dataNote.text.match(this.regexEmojiMatch);
-      const contentEmoji = await this.parseArrayEmoji(!regexContentEmoji ? [] : regexContentEmoji);
-      const content = this.parseContent(contentEmoji, dataNote.text);
+      let content = "";
+      if (dataNote.text) {
+        const regexContentEmoji = dataNote.text.match(this.regexEmojiMatch);
+        const contentEmoji = await this.parseArrayEmoji(!regexContentEmoji ? [] : regexContentEmoji);
+        content = this.parseContent(contentEmoji, dataNote.text);
+      }
 
       const regexDisplayNameEmoji = dataNote.user.name.match(this.regexEmojiMatch);
       const displayNameEmoji = await this.parseArrayEmoji(!regexDisplayNameEmoji ? [] : regexDisplayNameEmoji);
@@ -149,6 +152,7 @@ export default class MisskeyInstance extends BaseInstance {
         date: new Date(dataNote.createdAt)
       }
     } catch (e) {
+      console.error(e)
       if (e instanceof AxiosError) {
         if (!e.response) throw new Error("Failed to reach API");
         if (e.response.status === 404)
@@ -227,18 +231,18 @@ export default class MisskeyInstance extends BaseInstance {
     // Set paragraph
     text = '<p>' + text.replace(/\n([ \t]*\n)+/g, '</p><p>')
       .replace('\n', '<br />') + '</p>';
-    
-    // Parse hashtags
-    const hashtags = text.replace(/\s+/g,' ').split(' ').filter(x => x[0] === '#')
-    hashtags.forEach(val => {
-      text = text.replace(val, `<a href="${new URL(`https://${this.url.host}/tags/${val.substring(1)}`).toString()}">${val}</a>`);
-    });
 
     // Parch URI
     const matchURI = text.match(this.regexURIMatch);
     if (matchURI) matchURI.forEach(val => {
       const uri = new URL(val);
       text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`);
+    });
+    
+    // Parse hashtags
+    const hashtags = text.replace(/\s+/g,' ').split(' ').filter(x => x[0] === '#')
+    hashtags.forEach(val => {
+      text = text.replace(val, `<a href="${new URL(`https://${this.url.host}/tags/${val.substring(1)}`).toString()}">${val}</a>`);
     });
 
     // Parse user
