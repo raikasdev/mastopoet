@@ -1,6 +1,5 @@
 import { AxiosError } from "axios";
 import { Attachment, Post } from "../components/PostItem";
-import { truncateString } from "../utils/util";
 import BaseInstance from "./BaseInstance";
 import { axiosInstance } from "../utils/axios";
 
@@ -89,7 +88,13 @@ interface MisskeyNotesResponse {
   url?: string;
 }
 
+type TEmojiReplacer = { [emoji: string]: string };
+
+class MisskeyCrossingInstanceException extends Error { }
+
 export default class MisskeyInstance extends BaseInstance {
+  private regexEmojiMatch: RegExp = /:[^:\s]*:/gm
+
   public async execute(): Promise<Post> {
     // TODO: instance/api/notes/show [POST]
     // TODO: instance/api/users/show [POST] [If there's mentions over there]
@@ -101,7 +106,8 @@ export default class MisskeyInstance extends BaseInstance {
       const note = await axiosInstance.post(uri.toString(), { noteId: this.postId });
       const dataNote: MisskeyNotesResponse = note.data;
 
-      console.log(dataNote);
+      if (dataNote.user.instance)
+        throw new MisskeyCrossingInstanceException(`MISKEY_CROSSING_INSTANCE_${dataNote.user.instance.name}`);
 
       const username = `@${dataNote.user.username}@${this.url.host}`
 
@@ -113,15 +119,24 @@ export default class MisskeyInstance extends BaseInstance {
           description: val.comment
         }
       });
-      console.log(attachments);
+
+      const avatarUrl = new URL(dataNote.user.avatarUrl).searchParams.get('url') ?? "";
+
+      const regexContentEmoji = dataNote.text.match(this.regexEmojiMatch);
+      const contentEmoji = await this.parseArrayEmoji(!regexContentEmoji ? [] : regexContentEmoji);
+      const content = this.parseContent(this.replaceEmoji(contentEmoji, dataNote.text));
+
+      const regexDisplayNameEmoji = dataNote.user.name.match(this.regexEmojiMatch);
+      const displayNameEmoji = await this.parseArrayEmoji(!regexDisplayNameEmoji ? [] : regexDisplayNameEmoji);
+      const displayName = this.replaceEmoji(displayNameEmoji, dataNote.user.name)
 
       return {
         username,
         attachments,
-        displayName: dataNote.user.name,
+        avatarUrl,
+        content,
+        displayName,
         plainUsername: dataNote.user.username,
-        avatarUrl: dataNote.user.avatarUrl,
-        content: dataNote.text,
         boosts: dataNote.renoteCount,
         comments: dataNote.repliesCount,
         favourites: this.parseReactionToFavourites(dataNote.reactions),
@@ -133,6 +148,9 @@ export default class MisskeyInstance extends BaseInstance {
         if (e.response.status === 404)
           throw new Error("Post not found. Is it private?");
       }
+      if (e instanceof MisskeyCrossingInstanceException)
+        throw new Error('Crossing instance for Misskey is not supported!');
+
       throw new Error("Unknown error trying to reach Misskey instance");
     }
   }
@@ -145,5 +163,37 @@ export default class MisskeyInstance extends BaseInstance {
       count += reaction[react] as number;
     });
     return count;
+  }
+
+  private async parseArrayEmoji(setlist: string[]): Promise<TEmojiReplacer> {
+    setlist = setlist.map(val => val.substring(1, val.length - 1));
+    const newSetlist = [...new Set(setlist)];
+    const retSetlist: {
+      [emoji: string]: string
+    } = {}
+
+    await Promise.all(newSetlist.map(async val => {
+      const uri = new URL(`https://${this.url.host}/api/emoji`);
+      const emoji = await axiosInstance.post(uri.toString(), { name: val });
+      retSetlist[val] = emoji.data.url;
+    }))
+
+    return retSetlist;
+  }
+
+  private replaceEmoji(emojiList: TEmojiReplacer, text: string): string {
+    Object.keys(emojiList).forEach(val => {
+      text = text.replaceAll(
+        `:${val}:`,
+        `<img class="emoji" src="${emojiList[val]}" />`,
+      );
+    });
+    return text;
+  }
+
+  private parseContent(text: string): string {
+    text = '<p>' + text.replace(/\n([ \t]*\n)+/g, '</p><p>')
+      .replace('\n', '<br />') + '</p>';
+    return text;
   }
 }
