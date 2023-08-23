@@ -93,7 +93,9 @@ type TEmojiReplacer = { [emoji: string]: string };
 class MisskeyCrossingInstanceException extends Error { }
 
 export default class MisskeyInstance extends BaseInstance {
-  private regexEmojiMatch: RegExp = /:[^:\s]*:/gm
+  private regexEmojiMatch: RegExp = /:[^:\s]*:/gm;
+  private regexURIMatch: RegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm;
+  private regexUserMatch: RegExp = /(\B@[\w\d-_]+@([\w\d-]+\.)+[\w-]{2,4})|(\B@[\w\d-_]+)/gm;
 
   public async execute(): Promise<Post> {
     // TODO: instance/api/notes/show [POST]
@@ -124,7 +126,7 @@ export default class MisskeyInstance extends BaseInstance {
 
       const regexContentEmoji = dataNote.text.match(this.regexEmojiMatch);
       const contentEmoji = await this.parseArrayEmoji(!regexContentEmoji ? [] : regexContentEmoji);
-      const content = this.parseContent(this.replaceEmoji(contentEmoji, dataNote.text));
+      const content = this.parseContent(contentEmoji, dataNote.text);
 
       const regexDisplayNameEmoji = dataNote.user.name.match(this.regexEmojiMatch);
       const displayNameEmoji = await this.parseArrayEmoji(!regexDisplayNameEmoji ? [] : regexDisplayNameEmoji);
@@ -191,9 +193,34 @@ export default class MisskeyInstance extends BaseInstance {
     return text;
   }
 
-  private parseContent(text: string): string {
+  private parseContent(emoji: TEmojiReplacer, text: string): string {
+    // Set paragraph
     text = '<p>' + text.replace(/\n([ \t]*\n)+/g, '</p><p>')
       .replace('\n', '<br />') + '</p>';
+    
+    // Parse hashtags
+    const hashtags = text.replace(/\s+/g,' ').split(' ').filter(x => x[0] === '#')
+    hashtags.forEach(val => {
+      text = text.replace(val, `<a href="${new URL(`https://${this.url.host}/tags/${val.substring(1)}`).toString()}">${val}</a>`);
+    });
+
+    // Parch URI
+    const matchURI = text.match(this.regexURIMatch);
+    if (matchURI) matchURI.forEach(val => {
+      const uri = new URL(val);
+      text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`);
+    });
+
+    // Parse user
+    const users = text.match(this.regexUserMatch);
+    if (users) users.forEach(val => {
+      const uri = new URL(`https://${this.url.host}/${val}`);
+      text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`)
+    });
+
+    // Parse Emoji
+    text = this.replaceEmoji(emoji, text);
+
     return text;
   }
 }
