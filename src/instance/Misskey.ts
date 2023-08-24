@@ -7,6 +7,10 @@ interface MisskeyReaction {
   [emojiName: string]: number;
 }
 
+interface MisskeyGuestReaction {
+  [emojiName: string]: string;
+}
+
 interface MisskeyInstanceInterface {
   name: string;
   softwareName: string;
@@ -80,7 +84,7 @@ interface MisskeyNotesResponse {
   channel: object;
   localOnly: boolean;
   reactions: MisskeyReaction;
-  reactionsEmoji: MisskeyReaction;
+  reactionEmojis: MisskeyGuestReaction;
   renoteCount: number;
   repliesCount: number;
   emojis: MisskeyReaction;
@@ -135,7 +139,7 @@ export default class MisskeyInstance extends BaseInstance {
       const displayNameEmoji = await this.parseArrayEmoji(!regexDisplayNameEmoji ? [] : regexDisplayNameEmoji);
       const displayName = this.replaceEmoji(displayNameEmoji, dataNote.user.name)
 
-      const reactions = await this.fetchReaction(dataNote.reactions);
+      const reactions = await this.fetchReaction(dataNote.reactions, dataNote.reactionEmojis);
       console.log(reactions);
 
       return {
@@ -181,7 +185,7 @@ export default class MisskeyInstance extends BaseInstance {
     return emojiFetch.data.url as string;
   }
 
-  private async fetchReaction(reaction: MisskeyReaction): Promise<Reactions[]> {
+  private async fetchReaction(reaction: MisskeyReaction, guestReaction: MisskeyGuestReaction): Promise<Reactions[]> {
     const data: Reactions[] = [];
 
     await Promise.all(Object.keys(reaction).map(async react => {
@@ -193,6 +197,12 @@ export default class MisskeyInstance extends BaseInstance {
       const originalReact = react;
       react = react.replace('@.:', ':');
       react = react.substring(1, react.length - 1);
+
+      if (Object.keys(guestReaction).includes(react)) {
+        data.push({ url: guestReaction[react], count: reaction[originalReact] });
+        return;
+      }
+
       const guestDomain = react.match('@') ? react.split('@')[1] : this.url.host;
       react = guestDomain === this.url.host ? react : react.split('@')[0];
       const emoji = await this.getEmojiFromInstance(react, guestDomain);
