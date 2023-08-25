@@ -311,3 +311,25 @@
     color: var(--color-button);
   }
 }
+
+.action-bar {
+  flex-wrap: wrap; 
+
+  .emoji-reaction {
+    align-items: center;
+    background-color: #2a2c38;
+    border-radius: 5px;
+    display: flex;
+    margin: 0.5rem;
+    padding: 0.3rem;
+
+    .emoji-reaction-custom {
+      max-width: 20px;
+      object-fit: cover;
+    }
+
+    .emoji-reaction-count {
+      margin-left: 0.45rem;
+    }
+  }
+}
