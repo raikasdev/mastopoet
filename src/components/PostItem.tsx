@@ -162,14 +162,12 @@ export default function PostItem({
         </div>
       )}
       {
-        post.reactions && <div className="action-bar" style={{flexWrap: 'wrap'}}>
+        post.reactions && <div className="action-bar">
           {
-            post.reactions?.map((val, index) => <div key={index} className="emoji-reaction" style={{
-              backgroundColor: '#2a2c38', margin: '0.5rem', padding: '0.3rem', display: 'flex', alignItems: 'center', borderRadius: '5px'
-            }}>
-              { val.value && <span>{val.value}</span> }
-              { val.url && <img src={val.url} style={{maxWidth: '20px', objectFit: 'cover'}} /> }
-              <span style={{ marginLeft: '0.45rem' }}>{ val.count }</span>
+            post.reactions?.map((val, index) => <div key={index} className="emoji-reaction">
+              { val.value && <span className="emoji-reaction-unicode">{val.value}</span> }
+              { val.url && <img className="emoji-reaction-custom" src={val.url} /> }
+              <span className="emoji-reaction-count">{ val.count }</span>
             </div>)
           }
         </div>
