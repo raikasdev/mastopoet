@@ -2,6 +2,7 @@ import { Post } from "../components/PostItem";
 import BaseInstance from "./BaseInstance";
 import MisskeyInstance from "./Misskey";
 import MastodonInstance from "./Mastodon";
+import AkkomaInstance from "./Akkoma";
 
 // Since all script on ReactJS will be imported to frontend,
 // we cannot dynamically import them using File System NodeJS.
@@ -12,7 +13,13 @@ const Instances: InstanceListType = [
     [
       /^\/@\w+(?:@[\w-.]+)?\/(\d+)$/, // instace.social/@user/postid
       /^\/users\/\w+(?:@[\w-.]+)?\/statuses\/(\d+)$/, // instance.social/users/user/statuses/postid
-      /^\/@\w+(?:@[\w-.]+)?\/posts\/(\d+)$/, // Akkoma, instance.social/@user/posts/postid
+    ],
+  ],
+  [
+    AkkomaInstance,
+    [
+      /^\/@\w+(?:@[\w-.]+)?\/posts\/(\w+)$/, // Akkoma, instance.social/@user/posts/postid
+      /^\/notice\/(\w+)$/, // instance.social/notice/posts/postid
     ],
   ],
   [
