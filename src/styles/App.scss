@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .app {
   display: flex;
   flex-direction: column;
@@ -313,7 +318,7 @@
 }
 
 .action-bar {
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 
   .emoji-reaction {
     align-items: center;

@@ -22,6 +22,27 @@ It allows you to create ✨ stunning ✨ screenshots of your posts, with ability
 
 Add ?url=<post url> to the end of the Mastopoet URL to generate links that immediately open the post on Mastopoet.
 
+## Embedding
+
+You can embed a post with Mastopoet using an iframe.
+
+```html
+<iframe
+  src="https://mastopoet.raikas.dev/embed?url=<post url>"
+  width="600"
+  allowfullscreen="allowfullscreen"
+  sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+></iframe>
+```
+
+You can also use the following query parameters (`&key=value`) to customize the embed:
+
+- `theme` (bird-ui, bird-ui-light, mastodon, mastodon-light)
+- `interactions` (feed, feed no-date, normal, normal no-replies, hidden)
+- `background` Any valid value for CSS `background` (hex values, linear-gradient...)
+- `width` The background width in pixels (0-400, default 0), also remember to modify the iframe width!
+- `height` The background width in pixels (0-200, default 0)
+
 ## Themes available
 
 - [Bird UI](https://github.com/ronilaukkarinen/mastodon-bird-ui) (Dark, Light)
@@ -29,7 +50,9 @@ Add ?url=<post url> to the end of the Mastopoet URL to generate links that immed
 
 ## Images/profile pictures not working?
 
-This is due to CORS. It's a security feature of browsers, when assets (like profile pictures) are accessed from other websites. I cannot do anything about it, as the whole process is done client-side.
+This is due to CORS. It's a security feature of browsers, when assets (like profile pictures) are accessed from other websites. ~~I cannot do anything about it, as the whole process is done client-side.~~ From version 1.0.3, Mastopoet uses a proxy server if CORS is blocked, so this shouldn't happen anymore. If it does, please contact me at [roni@raikas.dev](mailto:roni@raikas.dev). Thank you!
+
+Help for old versions:
 
 The images are (almost) always fetched from the instance that your link is from. So, if your link is https://instance1.social/@user@instace2.social/0000000000, the data is fetched from instance1.social, even if the post is posted originally on instance2.social.
 
@@ -86,7 +109,7 @@ For more options, see [nginx container options at dockerhub](https://hub.docker.
 - [ ] PDF export with link ([idea](https://mementomori.social/@JMTee@mstdn.social/110790253659999588))
 - [x] Detect CORS failed images and show user info box
 - [x] If toot div is not an full integer, weird bars show in image.
-- [ ] Add support for Misskey/Firefish (src/instance/Misskey.ts)
+- [x] Add support for Misskey/Firefish (src/instance/Misskey.ts)
 
 ## Credits
 

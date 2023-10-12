@@ -43,6 +43,8 @@ export interface PostItemProps {
   options: Options;
 }
 
+const CORS_PROXY = "https://corsproxy.io";
+
 export default function PostItem({
   post,
   refInstance,
@@ -70,8 +72,15 @@ export default function PostItem({
             src={avatarUrl}
             alt={displayName}
             crossOrigin="anonymous"
-            onError={() => {
-              onImageLoadError(new URL(avatarUrl).host);
+            onError={({ currentTarget }) => {
+              if (currentTarget.src.startsWith(CORS_PROXY)) {
+                onImageLoadError(new URL(avatarUrl).host);
+              } else {
+                // Try CORS proxy
+                currentTarget.src = `${CORS_PROXY}?${encodeURIComponent(
+                  avatarUrl,
+                )}`;
+              }
             }}
           />
         </div>
@@ -114,8 +123,15 @@ export default function PostItem({
                     className="attachment"
                     style={{ aspectRatio: `${attachment.aspectRatio} / 1` }}
                     crossOrigin="anonymous"
-                    onError={() => {
-                      onImageLoadError(new URL(attachment.url).host);
+                    onError={({ currentTarget }) => {
+                      if (currentTarget.src.startsWith(CORS_PROXY)) {
+                        onImageLoadError(new URL(avatarUrl).host);
+                      } else {
+                        // Try CORS proxy
+                        currentTarget.src = `${CORS_PROXY}?${encodeURIComponent(
+                          avatarUrl,
+                        )}`;
+                      }
                     }}
                   />
                 );
@@ -130,8 +146,15 @@ export default function PostItem({
                     playsInline
                     controls={false}
                     crossOrigin="anonymous"
-                    onError={() => {
-                      onImageLoadError(new URL(avatarUrl).host);
+                    onError={({ currentTarget }) => {
+                      if (currentTarget.src.startsWith(CORS_PROXY)) {
+                        onImageLoadError(new URL(avatarUrl).host);
+                      } else {
+                        // Try CORS proxy
+                        currentTarget.src = `${CORS_PROXY}?${encodeURIComponent(
+                          avatarUrl,
+                        )}`;
+                      }
                     }}
                   />
                 );
@@ -161,17 +184,21 @@ export default function PostItem({
           ))}
         </div>
       )}
-      {
-        post.reactions && <div className="action-bar">
-          {
-            post.reactions?.map((val, index) => <div key={index} className="emoji-reaction">
-              { val.value && <span className="emoji-reaction-unicode">{val.value}</span> }
-              { val.url && <img className="emoji-reaction-custom" src={val.url} /> }
-              <span className="emoji-reaction-count">{ val.count }</span>
-            </div>)
-          }
+      {post.reactions && (
+        <div className="action-bar">
+          {post.reactions?.map((val, index) => (
+            <div key={index} className="emoji-reaction">
+              {val.value && (
+                <span className="emoji-reaction-unicode">{val.value}</span>
+              )}
+              {val.url && (
+                <img className="emoji-reaction-custom" src={val.url} />
+              )}
+              <span className="emoji-reaction-count">{val.count}</span>
+            </div>
+          ))}
         </div>
-      }
+      )}
       <div className={`action-bar action-bar-${interactionsPref}`}>
         <span className="action-bar-datetime">{formatDate(date)}</span>
         <div className="action">
@@ -184,13 +211,13 @@ export default function PostItem({
           <span className="action-counter">{boosts}</span>
           <span className="action-label">Boosts</span>
         </div>
-        {
-          !post.reactions && <div className="action">
+        {!post.reactions && (
+          <div className="action">
             <span className="icon-star" />
             <span className="action-counter">{favourites}</span>
             <span className="action-label">Favourites</span>
           </div>
-        }
+        )}
       </div>
     </div>
   );
