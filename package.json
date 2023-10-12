@@ -12,7 +12,10 @@
   "dependencies": {
     "axios": "^1.4.0",
     "dompurify": "^3.0.5",
+    "emoji-regex": "^10.2.1",
+    "emojilib": "^3.0.11",
     "html2canvas": "^1.4.1",
+    "piexifjs": "^1.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

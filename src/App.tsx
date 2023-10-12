@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Post } from "./components/PostItem";
 import html2canvas from "html2canvas";
-import { copyAltText, downloadURI, submitUrl } from "./utils/util";
+import { copyAltText, downloadURI, generateAltText } from "./utils/util";
+import emojiRegex from "emoji-regex";
+import emoji from "emojilib";
 import PostContainer from "./components/PostContainer";
 import useMinmaxState from "./utils/use-minmax-state";
 import {
@@ -24,10 +26,11 @@ import "./styles/App.scss";
 import "./themes/BirdUi.scss";
 import "./themes/Mastodon.scss";
 import CORSAlert from "./components/CORSAlert";
+import addExif from "./utils/piexif";
 
 function App() {
   const [message, setMessage] = useState("");
-  const [post, setPost] = useState<Post | null>(welcomePost);
+  const [post, setPost] = useState<Post>(welcomePost);
   const [rendering, setRendering] = useState(false);
   const [options, setOptions] = useObjectState<Options>(
     localStorage.getItem("options")
@@ -71,15 +74,40 @@ function App() {
           .toLocaleDateString("en-GB")
           .split("/")
           .join(""); // DDMMYYYY
+
+        const dataUri = canvas.toDataURL("image/jpeg", 1.0);
+        const altText = generateAltText(post, options).replaceAll(
+          emojiRegex(),
+          (value) => {
+            console.log(`-${value}-`, emoji[value]);
+            return `${(emoji[value][0] ?? "unknown").replaceAll(
+              "_",
+              " ",
+            )} emoji`;
+          },
+        ); // Need to make it safe for EXIF
+
         try {
           downloadURI(
-            canvas.toDataURL("image/jpeg", 1.0),
+            addExif(dataUri, altText),
             `mastopoet-${
               post?.plainUsername || "unknown-user"
             }-${timeStamp}.jpg`,
           );
         } catch (e) {
-          setMessage("Saving failed due to CORS issues.");
+          console.error(e);
+          try {
+            downloadURI(
+              dataUri,
+              `mastopoet-${
+                post?.plainUsername || "unknown-user"
+              }-${timeStamp}.jpg`,
+            );
+          } catch (e) {
+            setMessage("Saving failed due to CORS issues.");
+            return;
+          }
+          setMessage("Saving with EXIF metadata failed.");
         }
       }
       setRendering(false);
@@ -93,7 +121,7 @@ function App() {
     if (url) {
       (async () => {
         try {
-          const response = await submitUrl(url);
+          const response = await fetchPost(url);
           setPost(response);
           setHeight(defaultHeight);
           setWidth(defaultWidth);
