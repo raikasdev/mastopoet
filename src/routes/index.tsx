@@ -73,7 +73,7 @@ function IndexPage() {
         const altText = generateAltText(post, options).replaceAll(
           emojiRegex(),
           (value) => {
-            console.log(`-${value}-`, emoji[value]);
+            if (!emoji[value]) return "unknown emoji";
             return `${(emoji[value][0] ?? "unknown").replaceAll(
               "_",
               " ",
