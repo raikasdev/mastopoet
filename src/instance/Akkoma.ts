@@ -120,6 +120,8 @@ export default class AkkomaInstance extends BaseInstance {
       avatarUrl: obj.account.avatar,
       boosts: obj.reblogs_count,
       comments: obj.replies_count,
+      postURL: obj.url,
+      profileURL: obj.account.url,
       favourites: obj.favourites_count,
       content,
       attachments,

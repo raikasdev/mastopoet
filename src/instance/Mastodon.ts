@@ -93,10 +93,12 @@ export default class MastodonInstance extends BaseInstance {
       );
     });
 
-    const pollTotal = obj.poll?.options.reduce(
-      (acc: number, option: { votes_count: number }) => acc + option.votes_count,
-      0,
-    ) || 1;
+    const pollTotal =
+      obj.poll?.options.reduce(
+        (acc: number, option: { votes_count: number }) =>
+          acc + option.votes_count,
+        0,
+      ) || 1;
 
     const poll = obj.poll?.options.map(
       (option: { title: string; votes_count: number }) => ({
@@ -113,6 +115,8 @@ export default class MastodonInstance extends BaseInstance {
       avatarUrl: obj.account.avatar,
       boosts: obj.reblogs_count,
       comments: obj.replies_count,
+      postURL: obj.url,
+      profileURL: obj.account.url,
       favourites: obj.favourites_count,
       content,
       attachments,

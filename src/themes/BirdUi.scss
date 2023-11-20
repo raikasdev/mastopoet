@@ -81,6 +81,15 @@
           }
         }
 
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+
         .username {
           color: var(--color-text-dim);
           height: 1.5rem;
@@ -153,7 +162,6 @@
       font-size: 14px;
       padding-left: calc($avatar-size + $message-gap);
 
-    
       .poll-option {
         margin-bottom: 10px;
 
@@ -161,7 +169,7 @@
           line-height: 16px;
           margin: 0;
           padding: 6px 0;
-          
+
           strong {
             display: inline-block;
             width: 45px;
