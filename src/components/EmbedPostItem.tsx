@@ -1,53 +1,10 @@
-import { ForwardedRef } from "react";
 import { formatDate } from "../utils/util";
-import { InteractionsPreference, Options } from "../config";
 import DOMPurify from "dompurify";
-
-export interface Post {
-  displayName: string;
-  plainUsername: string;
-  username: string;
-  postURL: string; // Embed
-  profileURL: string; // Embed
-  avatarUrl: string;
-  content: string; // HTML!
-  favourites: number;
-  boosts: number;
-  comments: number;
-  attachments: Attachment[];
-  date: Date;
-  poll?: {
-    title: string;
-    votesCount: number;
-    percentage: number;
-  }[];
-  reactions?: Reactions[];
-}
-
-export interface Reactions {
-  value?: string;
-  url?: string;
-  count: number;
-}
-
-export interface Attachment {
-  type: string;
-  url: string;
-  aspectRatio: number;
-  description?: string;
-}
-
-export interface PostItemProps {
-  post: Post;
-  refInstance?: ForwardedRef<HTMLDivElement>;
-  interactionsPref: InteractionsPreference;
-  onImageLoadError: (host: string) => void;
-  options: Options;
-}
+import { PostItemProps } from "./PostItem";
 
 const CORS_PROXY = "https://corsproxy.io";
 
-export default function PostItem({
+export default function EmbedPostItem({
   post,
   refInstance,
   interactionsPref,
@@ -64,12 +21,14 @@ export default function PostItem({
     comments,
     attachments,
     date,
+    postURL,
+    profileURL,
   } = post;
 
   return (
     <div className="toot" ref={refInstance}>
       <div className="profile">
-        <div className="avatar">
+        <a href={profileURL} className="avatar">
           <img
             src={avatarUrl}
             alt={displayName}
@@ -85,19 +44,25 @@ export default function PostItem({
               }
             }}
           />
-        </div>
+        </a>
         <span className="display-name">
-          <bdi>
-            <strong
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(displayName),
-              }}
-            ></strong>
-          </bdi>
-          <span className="username">{username}</span>
+          <a href={profileURL}>
+            <bdi>
+              <strong
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(displayName),
+                }}
+              ></strong>
+            </bdi>
+          </a>
+          <a href={profileURL} className="username">
+            {username}
+          </a>
           {/** Replace with :has when Firefox starts supporting it */}
           {options.interactions === "feed" && (
-            <span className="datetime">{formatDate(date)}</span>
+            <a href={postURL} className="datetime">
+              {formatDate(date)}
+            </a>
           )}
         </span>
       </div>

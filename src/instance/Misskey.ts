@@ -27,8 +27,8 @@ interface MisskeyUser {
   host?: string;
   avatarUrl: string;
   avatarBlurhash: string;
-  isAdmin: boolean,
-  isModerator: boolean,
+  isAdmin: boolean;
+  isModerator: boolean;
   isBot?: boolean;
   isCat?: boolean;
   isLocked?: boolean;
@@ -41,7 +41,7 @@ interface MisskeyFileProperty {
   width: number;
   height: number;
   orientation: number;
-  avgColor: string
+  avgColor: string;
 }
 
 interface MisskeyFile {
@@ -71,13 +71,13 @@ interface MisskeyNotesResponse {
   user: MisskeyUser;
   replyId?: string;
   renoteId?: string;
-  reply?: MisskeyNotesResponse; 
+  reply?: MisskeyNotesResponse;
   renote?: MisskeyNotesResponse;
   isHidden: boolean;
   visibility: string;
   mentions: string[];
-  visibleUserIds: string[]
-  fileIds: string[]
+  visibleUserIds: string[];
+  fileIds: string[];
   files: MisskeyFile[];
   tags: string;
   channelId: string;
@@ -94,36 +94,42 @@ interface MisskeyNotesResponse {
 
 type TEmojiReplacer = { [emoji: string]: string };
 
-class MisskeyCrossingInstanceException extends Error { }
+class MisskeyCrossingInstanceException extends Error {}
 
 export default class MisskeyInstance extends BaseInstance {
   private regexEmojiMatch: RegExp = /:[^:\s]*:/gm;
-  private regexURIMatch: RegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm;
-  private regexUserMatch: RegExp = /(\B@[\w\d-_]+@([\w\d-]+\.)+[\w-]{2,4})|(\B@[\w\d-_]+)/gm;
+  private regexURIMatch: RegExp =
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gm;
+  private regexUserMatch: RegExp =
+    /(\B@[\w\d-_]+@([\w\d-]+\.)+[\w-]{2,4})|(\B@[\w\d-_]+)/gm;
 
   public async execute(): Promise<Post> {
     // TODO: instance/api/notes/show [POST]
     // TODO: instance/api/users/show [POST] [If there's mentions over there]
-    if (this.url.protocol !== 'https:')
+    if (this.url.protocol !== "https:")
       throw new Error("Protocol must be HTTPS");
 
     try {
       const uri = new URL(`https://${this.url.host}/api/notes/show`);
-      const note = await axiosInstance.post(uri.toString(), { noteId: this.postId });
+      const note = await axiosInstance.post(uri.toString(), {
+        noteId: this.postId,
+      });
       const dataNote: MisskeyNotesResponse = note.data;
 
       if (dataNote.user.instance)
-        throw new MisskeyCrossingInstanceException(`MISKEY_CROSSING_INSTANCE_${dataNote.user.instance.name}`);
+        throw new MisskeyCrossingInstanceException(
+          `MISKEY_CROSSING_INSTANCE_${dataNote.user.instance.name}`,
+        );
 
-      const username = `@${dataNote.user.username}@${this.url.host}`
+      const username = `@${dataNote.user.username}@${this.url.host}`;
 
-      const attachments: Attachment[] = dataNote.files.map(val => {
+      const attachments: Attachment[] = dataNote.files.map((val) => {
         return {
-          type: 'image',
+          type: "image",
           url: val.url,
           aspectRatio: 1,
-          description: val.comment
-        }
+          description: val.comment,
+        };
       });
 
       const avatarUrl = dataNote.user.avatarUrl;
@@ -131,15 +137,27 @@ export default class MisskeyInstance extends BaseInstance {
       let content = "";
       if (dataNote.text) {
         const regexContentEmoji = dataNote.text.match(this.regexEmojiMatch);
-        const contentEmoji = await this.parseArrayEmoji(!regexContentEmoji ? [] : regexContentEmoji);
+        const contentEmoji = await this.parseArrayEmoji(
+          !regexContentEmoji ? [] : regexContentEmoji,
+        );
         content = this.parseContent(contentEmoji, dataNote.text);
       }
 
-      const regexDisplayNameEmoji = dataNote.user.name.match(this.regexEmojiMatch);
-      const displayNameEmoji = await this.parseArrayEmoji(!regexDisplayNameEmoji ? [] : regexDisplayNameEmoji);
-      const displayName = this.replaceEmoji(displayNameEmoji, dataNote.user.name)
+      const regexDisplayNameEmoji = dataNote.user.name.match(
+        this.regexEmojiMatch,
+      );
+      const displayNameEmoji = await this.parseArrayEmoji(
+        !regexDisplayNameEmoji ? [] : regexDisplayNameEmoji,
+      );
+      const displayName = this.replaceEmoji(
+        displayNameEmoji,
+        dataNote.user.name,
+      );
 
-      const reactions = await this.fetchReaction(dataNote.reactions, dataNote.reactionEmojis);
+      const reactions = await this.fetchReaction(
+        dataNote.reactions,
+        dataNote.reactionEmojis,
+      );
       console.log(reactions);
 
       return {
@@ -152,18 +170,20 @@ export default class MisskeyInstance extends BaseInstance {
         plainUsername: dataNote.user.username,
         boosts: dataNote.renoteCount,
         comments: dataNote.repliesCount,
+        postURL: dataNote.url || dataNote.uri || "",
+        profileURL: `https://${dataNote.user.host}/@${dataNote.user.username}`,
         favourites: this.parseReactionToFavourites(dataNote.reactions),
-        date: new Date(dataNote.createdAt)
-      }
+        date: new Date(dataNote.createdAt),
+      };
     } catch (e) {
-      console.error(e)
+      console.error(e);
       if (e instanceof AxiosError) {
         if (!e.response) throw new Error("Failed to reach API");
         if (e.response.status === 404)
           throw new Error("Post not found. Is it private?");
       }
       if (e instanceof MisskeyCrossingInstanceException)
-        throw new Error('Crossing instance for Misskey is not supported!');
+        throw new Error("Crossing instance for Misskey is not supported!");
 
       throw new Error("Unknown error trying to reach Misskey instance");
     }
@@ -172,63 +192,80 @@ export default class MisskeyInstance extends BaseInstance {
   // TODO: Can you change this to reaction list like Misskey things?
   private parseReactionToFavourites(reaction: MisskeyReaction): number {
     let count = 0;
-    Object.keys(reaction).forEach(react => {
-      if (typeof reaction[react] !== 'number') return;
+    Object.keys(reaction).forEach((react) => {
+      if (typeof reaction[react] !== "number") return;
       count += reaction[react];
     });
     return count;
   }
 
-  private async getEmojiFromInstance(emoji: string, host: string = this.url.host): Promise<string> {
+  private async getEmojiFromInstance(
+    emoji: string,
+    host: string = this.url.host,
+  ): Promise<string> {
     const uri = new URL(`https://${host}/api/emoji`);
-    const emojiFetch = await axiosInstance.post(uri.toString(), { name: emoji });
+    const emojiFetch = await axiosInstance.post(uri.toString(), {
+      name: emoji,
+    });
     return emojiFetch.data.url as string;
   }
 
-  private async fetchReaction(reaction: MisskeyReaction, guestReaction: MisskeyGuestReaction): Promise<Reactions[]> {
+  private async fetchReaction(
+    reaction: MisskeyReaction,
+    guestReaction: MisskeyGuestReaction,
+  ): Promise<Reactions[]> {
     const data: Reactions[] = [];
 
-    await Promise.all(Object.keys(reaction).map(async react => {
-      if (react[0] !== ':' && react[react.length - 1] !== ':') {
-        data.push({ value: react, count: reaction[react] });
-        return;
-      }
+    await Promise.all(
+      Object.keys(reaction).map(async (react) => {
+        if (react[0] !== ":" && react[react.length - 1] !== ":") {
+          data.push({ value: react, count: reaction[react] });
+          return;
+        }
 
-      const originalReact = react;
-      react = react.replace('@.:', ':');
-      react = react.substring(1, react.length - 1);
+        const originalReact = react;
+        react = react.replace("@.:", ":");
+        react = react.substring(1, react.length - 1);
 
-      if (Object.keys(guestReaction).includes(react)) {
-        data.push({ url: guestReaction[react], count: reaction[originalReact] });
-        return;
-      }
+        if (Object.keys(guestReaction).includes(react)) {
+          data.push({
+            url: guestReaction[react],
+            count: reaction[originalReact],
+          });
+          return;
+        }
 
-      const guestDomain = react.match('@') ? react.split('@')[1] : this.url.host;
-      react = guestDomain === this.url.host ? react : react.split('@')[0];
-      const emoji = await this.getEmojiFromInstance(react, guestDomain);
+        const guestDomain = react.match("@")
+          ? react.split("@")[1]
+          : this.url.host;
+        react = guestDomain === this.url.host ? react : react.split("@")[0];
+        const emoji = await this.getEmojiFromInstance(react, guestDomain);
 
-      data.push({ url: emoji, count: reaction[originalReact] });
-    }));
+        data.push({ url: emoji, count: reaction[originalReact] });
+      }),
+    );
 
     return data;
   }
 
   private async parseArrayEmoji(setlist: string[]): Promise<TEmojiReplacer> {
-    setlist = setlist.map(val => val.substring(1, val.length - 1));
+    setlist = setlist.map((val) => val.substring(1, val.length - 1));
     const newSetlist = [...new Set(setlist)];
     const retSetlist: {
-      [emoji: string]: string
-    } = {}
+      [emoji: string]: string;
+    } = {};
 
-    await Promise.all(newSetlist.map(async val => {
-      retSetlist[val] = await this.getEmojiFromInstance(val);
-    }))
+    await Promise.all(
+      newSetlist.map(async (val) => {
+        retSetlist[val] = await this.getEmojiFromInstance(val);
+      }),
+    );
 
     return retSetlist;
   }
 
   private replaceEmoji(emojiList: TEmojiReplacer, text: string): string {
-    Object.keys(emojiList).forEach(val => {
+    Object.keys(emojiList).forEach((val) => {
       text = text.replaceAll(
         `:${val}:`,
         `<img class="emoji" src="${emojiList[val]}" />`,
@@ -239,28 +276,40 @@ export default class MisskeyInstance extends BaseInstance {
 
   private parseContent(emoji: TEmojiReplacer, text: string): string {
     // Set paragraph
-    text = '<p>' + text.replace(/\n([ \t]*\n)+/g, '</p><p>')
-      .replace('\n', '<br />') + '</p>';
+    text =
+      "<p>" +
+      text.replace(/\n([ \t]*\n)+/g, "</p><p>").replace("\n", "<br />") +
+      "</p>";
 
     // Parch URI
     const matchURI = text.match(this.regexURIMatch);
-    if (matchURI) matchURI.forEach(val => {
-      const uri = new URL(val);
-      text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`);
-    });
-    
+    if (matchURI)
+      matchURI.forEach((val) => {
+        const uri = new URL(val);
+        text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`);
+      });
+
     // Parse hashtags
-    const hashtags = text.replace(/\s+/g,' ').split(' ').filter(x => x[0] === '#')
-    hashtags.forEach(val => {
-      text = text.replace(val, `<a href="${new URL(`https://${this.url.host}/tags/${val.substring(1)}`).toString()}">${val}</a>`);
+    const hashtags = text
+      .replace(/\s+/g, " ")
+      .split(" ")
+      .filter((x) => x[0] === "#");
+    hashtags.forEach((val) => {
+      text = text.replace(
+        val,
+        `<a href="${new URL(
+          `https://${this.url.host}/tags/${val.substring(1)}`,
+        ).toString()}">${val}</a>`,
+      );
     });
 
     // Parse user
     const users = text.match(this.regexUserMatch);
-    if (users) users.forEach(val => {
-      const uri = new URL(`https://${this.url.host}/${val}`);
-      text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`)
-    });
+    if (users)
+      users.forEach((val) => {
+        const uri = new URL(`https://${this.url.host}/${val}`);
+        text = text.replace(val, `<a href="${uri.toString()}">${val}</a>`);
+      });
 
     // Parse Emoji
     text = this.replaceEmoji(emoji, text);

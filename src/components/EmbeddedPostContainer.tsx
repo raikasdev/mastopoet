@@ -1,6 +1,7 @@
 import { forwardRef, useMemo, useRef } from "react";
-import PostItem, { Post, PostItemProps } from "./PostItem";
+import { Post, PostItemProps } from "./PostItem";
 import { Options } from "../config";
+import EmbedPostItem from "./EmbedPostItem";
 
 interface PostContainerProps {
   post: Post;
@@ -22,7 +23,7 @@ export default function EmbeddedPostContainer({
     () =>
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       forwardRef<HTMLDivElement, PostItemProps>((props, ref) => (
-        <PostItem {...props} refInstance={ref} />
+        <EmbedPostItem {...props} refInstance={ref} />
       )),
     [post],
   );
