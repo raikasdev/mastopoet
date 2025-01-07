@@ -38,7 +38,7 @@ export default function EmbedPostItem({
                 onImageLoadError(new URL(avatarUrl).host);
               } else {
                 // Try CORS proxy
-                currentTarget.src = `${CORS_PROXY}?${encodeURIComponent(
+                currentTarget.src = `${CORS_PROXY}?url=${encodeURIComponent(
                   avatarUrl,
                 )}`;
               }
@@ -76,9 +76,8 @@ export default function EmbedPostItem({
           <div
             className="image-gallery"
             style={{
-              gridTemplateColumns: `repeat(${
-                attachments.length <= 2 ? attachments.length : 2
-              }, minmax(0, 1fr))`,
+              gridTemplateColumns: `repeat(${attachments.length <= 2 ? attachments.length : 2
+                }, minmax(0, 1fr))`,
             }}
           >
             {attachments.map((attachment) => {
@@ -95,7 +94,7 @@ export default function EmbedPostItem({
                         onImageLoadError(new URL(avatarUrl).host);
                       } else {
                         // Try CORS proxy
-                        currentTarget.src = `${CORS_PROXY}?${encodeURIComponent(
+                        currentTarget.src = `${CORS_PROXY}?url=${encodeURIComponent(
                           avatarUrl,
                         )}`;
                       }
@@ -118,7 +117,7 @@ export default function EmbedPostItem({
                         onImageLoadError(new URL(avatarUrl).host);
                       } else {
                         // Try CORS proxy
-                        currentTarget.src = `${CORS_PROXY}?${encodeURIComponent(
+                        currentTarget.src = `${CORS_PROXY}?url=${encodeURIComponent(
                           avatarUrl,
                         )}`;
                       }
@@ -138,13 +137,12 @@ export default function EmbedPostItem({
                 <strong>{option.percentage}%</strong> {option.title}
               </p>
               <div
-                className={`option-bar ${
-                  post.poll
-                    ?.map((i) => i.votesCount)
-                    .sort((a, b) => b - a)[0] === option.votesCount
-                    ? "winner"
-                    : ""
-                }`}
+                className={`option-bar ${post.poll
+                  ?.map((i) => i.votesCount)
+                  .sort((a, b) => b - a)[0] === option.votesCount
+                  ? "winner"
+                  : ""
+                  }`}
                 style={{ width: `${option.percentage}% ` }}
               />
             </div>
