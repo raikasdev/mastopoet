@@ -129,7 +129,7 @@ export default function PostItem({
                         onImageLoadError(new URL(avatarUrl).host);
                       } else {
                         // Try CORS proxy
-                        currentTarget.src = `${CORS_PROXY}?url=${encodeURIComponent(
+                        currentTarget.src = `${CORS_PROXY}?key=31bc7921&url=${encodeURIComponent(
                           avatarUrl,
                         )}`;
                       }
@@ -152,7 +152,7 @@ export default function PostItem({
                         onImageLoadError(new URL(avatarUrl).host);
                       } else {
                         // Try CORS proxy
-                        currentTarget.src = `${CORS_PROXY}?url=${encodeURIComponent(
+                        currentTarget.src = `${CORS_PROXY}?key=31bc7921&url=${encodeURIComponent(
                           avatarUrl,
                         )}`;
                       }
